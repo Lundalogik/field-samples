@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Create Case with log message demo</Id>
+  <Command>
+    <Name>CreateCase</Name>
+    <Parameter>
+      <Name>CaseId</Name>
+      <Value>X1234</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Case title</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Description</Name>
+      <Value>Case created using commands sample</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>WriteToLog</Name>
+	<Target>cases/X1234</Target>
+    <Parameter>
+      <Name>Text</Name>
+      <Value>This is the log message</Value>
+    </Parameter>
+	<!-- Default category is Info. No need to specify this 
+    <Parameter>
+      <Name>Category</Name>
+      <Value>Info</Value>
+    </Parameter>
+	-->
+  </Command>
+</CommandBatch>

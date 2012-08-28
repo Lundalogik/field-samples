@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Create Case demo</Id>
+  <Command>
+    <Name>CreateCase</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Case title</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Description</Name>
+      <Value>Case created using commands sample</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
