@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Change UQ status demo</Id>
+  <Command>
+    <Name>ChangeUsageQuantityStatus</Name>
+	<Target>usagequantities/12062501173</Target>
+    <Parameter>
+      <Name>Status</Name>
+      <Value>Locked</Value>
+    </Parameter>
+    <Parameter>
+      <Name>CRMSystemId</Name>
+      <Value>12CRMSystemId</Value>
+    </Parameter>
+    <Parameter>
+      <Name>FinancialSystemId</Name>
+      <Value>12FinancialSystemId</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
