@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Create Hierarchy with Units demo</Id>
+  <Command>
+    <Name>CreateHierarchy</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Stockholm</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateUnit</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Gamla Stan</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Hierarchy</Name>
+      <Value>Stockholm</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateUnit</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Kungliga Slottet</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Hierarchy</Name>
+      <Value>Stockholm</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Parent</Name>
+      <Value>Gamla Stan</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateUnit</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Skattkammaren</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Hierarchy</Name>
+      <Value>Stockholm</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Parent</Name>
+      <Value>Kungliga Slottet</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateUnit</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Högvakten</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Hierarchy</Name>
+      <Value>Stockholm</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Parent</Name>
+      <Value>Kungliga Slottet</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
