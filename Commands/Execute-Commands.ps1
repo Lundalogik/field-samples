@@ -63,10 +63,10 @@ if(!$?) {
 Write-Host ("Response written to {0}" -f $outputFile)
 Write-Host ("cURL trace output written to {0}" -f $traceFile)
 
-if($xml.HasErrors -eq "true") {
-	Write-Host -ForegroundColor Red "Command execution failed!"
-} else {
+if($xml.HasErrors -ne "true") {
 	Write-Host "Successfully executed commands:"
+} else {
+	Write-Host -ForegroundColor Red "Command execution failed!"
 }
 
 $xml.CommandResponse | %{
