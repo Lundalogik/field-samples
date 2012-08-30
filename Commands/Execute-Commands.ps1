@@ -43,6 +43,8 @@ if( $file.Extension -ne ".xml" ) {
 $outputFile = "{0}\{1}_output.xml" -f $file.Directory, $file.BaseName
 $traceFile = "{0}\{1}_trace.txt" -f $file.Directory, $file.BaseName
 
+$outputFile,$traceFile | rm -Force
+
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
 curl -s --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
