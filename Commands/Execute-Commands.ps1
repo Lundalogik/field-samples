@@ -43,7 +43,7 @@ if( $file.Extension -ne ".xml" ) {
 $outputFile = "{0}\{1}_output.xml" -f $file.Directory, $file.BaseName
 $traceFile = "{0}\{1}_trace.txt" -f $file.Directory, $file.BaseName
 
-$outputFile,$traceFile | rm -Force
+$outputFile,$traceFile | rm -Force -ErrorAction SilentlyContinue
 
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
