@@ -17,4 +17,28 @@
       <Value>12FinancialSystemId</Value>
     </Parameter>
   </Command>
+  <Command>
+    <Name>ChangeUsageQuantityStatus</Name>
+    <Target>usagequantities/12062501174</Target>
+    <Parameter>
+      <Name>Status</Name>
+      <Value>Editable</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>ChangeUsageQuantityStatus</Name>
+    <Target>usagequantities/12062501175</Target>
+    <Parameter>
+      <Name>Status</Name>
+      <Value>NotEditable</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>ChangeUsageQuantityStatus</Name>
+    <Target>usagequantities/12062501176</Target>
+    <Parameter>
+      <Name>Status</Name>
+      <Value>Canceled</Value>
+    </Parameter>
+  </Command>
 </CommandBatch>
