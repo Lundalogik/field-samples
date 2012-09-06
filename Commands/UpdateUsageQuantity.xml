@@ -2,7 +2,7 @@
 <CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>Change UQ status demo</Id>
   <Command>
-    <Name>ChangeUsageQuantityStatus</Name>
+    <Name>UpdateUsageQuantity</Name>
 	<Target>usagequantities/12062501173</Target>
     <Parameter>
       <Name>Status</Name>
@@ -18,7 +18,7 @@
     </Parameter>
   </Command>
   <Command>
-    <Name>ChangeUsageQuantityStatus</Name>
+    <Name>UpdateUsageQuantity</Name>
     <Target>usagequantities/12062501174</Target>
     <Parameter>
       <Name>Status</Name>
@@ -26,7 +26,7 @@
     </Parameter>
   </Command>
   <Command>
-    <Name>ChangeUsageQuantityStatus</Name>
+    <Name>UpdateUsageQuantity</Name>
     <Target>usagequantities/12062501175</Target>
     <Parameter>
       <Name>Status</Name>
@@ -34,7 +34,7 @@
     </Parameter>
   </Command>
   <Command>
-    <Name>ChangeUsageQuantityStatus</Name>
+    <Name>UpdateUsageQuantity</Name>
     <Target>usagequantities/12062501176</Target>
     <Parameter>
       <Name>Status</Name>
