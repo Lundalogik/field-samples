@@ -3,6 +3,8 @@
 	$excelFile,
 	[parameter(mandatory=$true)]
 	$sheetName,
+	[parameter(mandatory=$false)]
+	[scriptblock] $rowFilter = { $true },
 	[parameter(mandatory=$true)]
 	$commandName,
 	[parameter(mandatory=$true)]
@@ -40,17 +42,40 @@ $csvFiles | %{
 	csvToCommandBatch -csvFile $_.Path `
 					  -outputFile $commandBatchPath `
 					  -defaultCommandName $commandName `
+					  -filter $rowFilter `
 					  -reencodefromencoding UTF7
 	if( !(gi $commandBatchPath) ) {
 		Write-Error "Command batch file $commandBatchPath could not be found"
 		exit 1
 	}
+	
+	Write-Host ("Sending commands to $serviceUri ({0:f2}Mb in size)" -f ((gi $commandBatchPath).Length/1mb))
 	executeCommands -Path $commandBatchPath `
 					-serviceuri $serviceUri `
 					-username $username `
-					-password $password
+					-password $password `
+					-nooutput
 	if(!$?) {
 		Write-Error "Failed to execute command batch $commandBatchPath"
+		$outputfile = $commandBatchPath -replace "\.xml$","_output.xml"
+		$ErrorReport = $commandBatchPath -replace "\.xml$","_errors.csv"
+		if( Test-Path $outputfile ) {
+			Write-Host "Creating error report $errorReport"
+			try {
+				$xml = [xml](gc $outputfile)
+				$err = $xml.CommandBatchResponse.CommandResponse | ?{ $_.HasErrors -eq "true" }  | %{ 
+					$command = $_ | select ErrorMessage
+					$_.Command.Parameter | ?{ $_.Name } | %{ 
+						$command | add-member -membertype noteproperty -name $_.Name -valu $_.Value 
+					}
+					$command 
+				} 
+				$err | Export-Csv -NoTypeInformation -Path $ErrorReport -Encoding utf8
+				$err 				
+			} catch {
+				Write-Error "Error creating error report! $_"
+			}
+		}
 		exit 1
 	}
 }
