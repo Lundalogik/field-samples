@@ -22,7 +22,9 @@ param(
 	[parameter(mandatory=$true)]
 	$Username,
 	[parameter(mandatory=$true)]
-	$Password
+	$Password,
+	[parameter(mandatory=$false)]
+	[Switch] $noOutput
 )
 
 if( !( Get-Command curl ) ) {
@@ -48,6 +50,11 @@ $outputFile,$traceFile | rm -Force -ErrorAction SilentlyContinue
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
 curl -s --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
+if(!$? -or !(Test-Path $outputFile)) {
+	Write-Error ("Curl failed with error {0}" -f $LASTEXITCODE)
+	exit 5
+}
+
 try {
 	$xml = ([xml](gc $outputFile)).CommandBatchResponse
 } catch {
@@ -55,37 +62,37 @@ try {
 	exit 4
 }
 
-if(!$?) {
-	Write-Error ("Curl failed with error {0}" -f $LASTEXITCODE)
-	exit 5
-}
 
 Write-Host ("Response written to {0}" -f $outputFile)
 Write-Host ("cURL trace output written to {0}" -f $traceFile)
 
 if($xml.HasErrors -ne "true") {
 	Write-Host "Successfully executed commands:"
+	$exitCode = 0
 } else {
 	Write-Host -ForegroundColor Red "Command execution failed!"
+	$exitCode = 1
 }
 
-$xml.CommandResponse | %{
-	Write-Host -NoNewline "Command: "
-	Write-Host -ForegroundColor Yellow $_.Command.Name
-	if( $_.HasErrors ) {
-		Write-Host -NoNewline "  Error: "
-		Write-Host -ForegroundColor Red $_.ErrorMessage
+if( !$noOutput) {
+	$xml.CommandResponse | %{
+		Write-Host -NoNewline "Command: "
+		Write-Host -ForegroundColor Yellow $_.Command.Name
+		if( $_.HasErrors ) {
+			Write-Host -NoNewline "  Error: "
+			Write-Host -ForegroundColor Red $_.ErrorMessage
+		}
+		$_.Command.Parameter | %{
+			Write-Host -NoNewline "   Parameter: "
+			Write-Host -ForegroundColor Yellow $_.Name
+			Write-Host -NoNewline "       Value: "
+			Write-Host -ForegroundColor Yellow $_.Value
+		}
+		Write-Host "Affected items: "
+		$_.AffectedItems.Item | %{
+			Write-Host -ForegroundColor Yellow ("   {0} (Revision: {1})" -f $_.Href, $_.Revision)
+		}
+		Write-Host ""
 	}
-	$_.Command.Parameter | %{
-		Write-Host -NoNewline "   Parameter: "
-		Write-Host -ForegroundColor Yellow $_.Name
-		Write-Host -NoNewline "       Value: "
-		Write-Host -ForegroundColor Yellow $_.Value
-	}
-	Write-Host "Affected items: "
-	$_.AffectedItems.Item | %{
-		Write-Host -ForegroundColor Yellow ("   {0} (Revision: {1})" -f $_.Href, $_.Revision)
-	}
-	Write-Host ""
-}
-	
+}	
+exit $exitCode
