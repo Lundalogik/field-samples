@@ -73,7 +73,11 @@ param(
 	[parameter(mandatory=$false)]
 	[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding] $reencodeFromEncoding,
 	[parameter(mandatory=$false)]
-	[Switch] $preview
+	[Switch] $preview,
+	[parameter(mandatory=$false)]
+	[int] $chunkSize = 200,
+	[parameter(mandatory=$false)]
+	$batchId = "CommandBatch"
 )
 
 $dataFile = $csvFile
@@ -90,11 +94,6 @@ if(!$ignoredColumns) { $ignoredColumns = @() }
 if(!$columnValuePrefix) { $columnValuePrefix = @{} }
 
 $xmlns = "http://schemas.remotex.net/Apps/201207/Commands"
-$CommandBatch = [xml]@"
-<?xml version="1.0" encoding="utf-8"?>
-<CommandBatch xmlns="$xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-</CommandBatch>
-"@
 
 $attrs = $data | Select -first 1 | gm -MemberType NoteProperty | ?{ $_.Name -ne "CommandName" } | Select -ExpandProperty Name
 
@@ -135,12 +134,41 @@ if($preview) {
 	return
 }
 
+if( ![System.IO.Path]::IsPathRooted( $outputFile ) ) {
+	$outputFile = Join-Path $PWD $outputFile
+}
+
 $filteredRecords = $data | ?{ [scriptblock]::Create($filter.ToString().Replace( "$_", "$args[0]") ).InvokeReturnAsIs($_) }
 $filteredRecordCount = ($filteredRecords | measure).Count
 if( $filteredRecordCount -ne $recordCount ) {
 	Write-Host "Filtered out $filteredRecordCount records matching $($filter.ToString())"
 }
+
+function saveCommandBatchToFile( $CommandBatch, $outputFile, $chunkNumber ) {
+	$fileName = $outputFile -replace "\.xml$","_Chunk-$chunkNumber.xml"
+	$CommandBatch.Save( $fileName )
+	resolve-path $fileName
+}
+
+$chunks = [int]([Math]::Ceiling( $filteredRecordCount / $chunkSize ))
+$chunkNumber = 0
+$currentBatchId = $batchId
+$recordNumber = 0
 foreach ($record in $filteredRecords ){
+	$recordNumber += 1
+	if( !$CommandBatch ) {
+		$chunkNumber += 1
+		if( $chunks -gt 1 ) {
+			$currentBatchId = "{0} - chunk {1}" -f $batchId.Trim(), $chunkNumber
+		}
+		$CommandBatch = [xml]@"
+<?xml version="1.0" encoding="utf-8"?>
+		<CommandBatch xmlns="$xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<Id>$currentBatchId</Id>
+		</CommandBatch>
+"@
+	}
+	
     $Command = $CommandBatch.CreateElement("Command", $xmlns)
     $Command.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
 	if( $record.CommandName ) {
@@ -163,9 +191,11 @@ foreach ($record in $filteredRecords ){
         }
     }
     $CommandBatch.CommandBatch.AppendChild($Command) | out-null
+	if( ( $recordNumber % $chunkSize ) -eq 0 ) {
+		saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
+		$CommandBatch = $null
+	}	
 }
-
-if( ![System.IO.Path]::IsPathRooted( $outputFile ) ) {
-	$outputFile = Join-Path $PWD $outputFile
+if( $CommandBatch ) {	
+	saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
 }
-$CommandBatch.Save( $outputFile )
