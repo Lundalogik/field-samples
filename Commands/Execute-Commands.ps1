@@ -49,11 +49,14 @@ $outputFile,$traceFile | rm -Force -ErrorAction SilentlyContinue
 
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
+$sw = New-Object System.Diagnostics.Stopwatch
+$sw.Start()
 curl -s --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
 if(!$? -or !(Test-Path $outputFile)) {
 	Write-Error ("Curl failed with error {0}" -f $LASTEXITCODE)
 	exit 5
 }
+$sw.Stop()
 
 try {
 	$xml = ([xml](gc $outputFile)).CommandBatchResponse
@@ -62,7 +65,8 @@ try {
 	exit 4
 }
 
-
+Write-Host "Command batch execution took $($sw.Elapsed.Minutes)m $($sw.Elapsed.Seconds)s"
+Write-Host ""
 Write-Host ("Response written to {0}" -f $outputFile)
 Write-Host ("cURL trace output written to {0}" -f $traceFile)
 
