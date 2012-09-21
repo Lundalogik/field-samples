@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>CreateProduct demo</Id>
+  <Command>
+    <Name>CreateProduct</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Balofix</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Type</Name>
+      <Value>Other</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Code</Name>
+      <Value>123</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateProduct</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Roller</Value>
+    </Parameter>
+        <Parameter>
+      <Name>Type</Name>
+      <Value>Other</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateProduct</Name>
+    <Parameter>
+      <Name>Code</Name>
+      <Value>12345</Value>
+    </Parameter>
+        <Parameter>
+      <Name>Type</Name>
+      <Value>Other</Value>
+    </Parameter>
+        <Parameter>
+      <Name>Title</Name>
+      <Value>Other</Value>
+    </Parameter>
+  </Command>
+  <Command>
+    <Name>CreateProduct</Name>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>Screen</Value>
+    </Parameter>
+        <Parameter>
+      <Name>Type</Name>
+      <Value>Other</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
