@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Update Contract demo</Id>
+  <Command>
+    <Name>CreateContract</Name>
+    <Target>contracts/12092100057</Target>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>My Updated Contract</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Description</Name>
+      <Value>Contract updated using commands sample</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
