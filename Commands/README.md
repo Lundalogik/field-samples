@@ -1,4 +1,4 @@
-﻿Command Samples
+Command Samples
 ===============
 
 The command samples can be executed using the script called Execute-Commands.ps1.
@@ -40,3 +40,27 @@ So for example you could send the CommandBatch (CreateCaseSample.xml) to a local
     Affected items:
        log/cases/X1234 (Revision: )
 
+
+Available Commands
+==================
+
+In order to see the commands we provide in the API you can use an HTTP GET to the endpoint https://your-remotex-instance/api/commands.
+We are planning to include some kind of "Commands Playground" in the API help site, but until we get there a good tip is to 
+use our HTML formatter using the URL https://your-remotex-instance/api/commands?format=html.
+
+API support
+===========
+Not quite sure how you should consume the API in your specific case? Please contact your RemoteX representative 
+with your inquiries and we will do our best to respond to your needs.
+
+Other useful tools
+==================
+(https://github.com/remotex/Samples/blob/master/Commands/Convert-CsvToCommandBatch.ps1)
+
+Converts CSV data to command batches, ready to be sent to the API using Execute-Commands.ps1 (see above)
+
+(https://github.com/remotex/Samples/blob/master/Commands/Import-ExcelSheetToRemoteX.ps1)
+
+Wrapper around the above and Execute-Commands which targets an input Microsoft Excel file and saves it to CSV using 
+the Excel.Application COM object. Very handy if you need to import massive amounts of data to RemoteX Applications
+and wants to author it using Microsoft Excel.
