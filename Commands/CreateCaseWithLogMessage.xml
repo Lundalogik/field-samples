@@ -4,7 +4,7 @@
   <Command>
     <Name>CreateCase</Name>
     <Parameter>
-      <Name>CaseId</Name>
+      <Name>Id</Name>
       <Value>X1234</Value>
     </Parameter>
     <Parameter>
