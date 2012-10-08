@@ -50,7 +50,7 @@ end {
 	$chunks = [int]([Math]::Ceiling( $filteredRecordCount / $chunkSize ))
 	$chunkNumber = 0
 	$currentBatchId = $batchId
-	$recordNumber = 0
+	$recordNumber = 1
 	foreach ($cmd in $commands ){
 		$cmdNumber += 1
 		if( !$CommandBatch ) {
