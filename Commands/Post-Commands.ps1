@@ -93,7 +93,8 @@ end {
 		if( ( $recordNumber % $chunkSize ) -eq 0 ) {
 			postCommandBatch $CommandBatch
 			$CommandBatch = $null
-		}	
+		}
+		$recordNumber++
 	}
 	if( $CommandBatch ) {	
 		postCommandBatch $CommandBatch
