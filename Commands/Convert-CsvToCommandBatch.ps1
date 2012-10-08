@@ -63,7 +63,7 @@ param(
 	[parameter(mandatory=$false)]
 	$defaultCommandName = "",
 	[parameter(mandatory=$false)]
-	[scriptblock] $filter = { $true },
+	[scriptblock] $filter = $null,
 	[parameter(mandatory=$false)]
 	[hashtable]$columnToParameterMap,
 	[parameter(mandatory=$false)]
@@ -83,7 +83,9 @@ param(
 $dataFile = $csvFile
 if( $reencodeFromEncoding ) {
 	$dataFile = [System.IO.Path]::GetTempFileName()
+	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 0
 	gc $csvFile -Encoding $reencodeFromEncoding | Out-File -Encoding UTF8 -FilePath $dataFile
+	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 100 -Completed
 }
 $data = Import-Csv $dataFile
 $recordCount = ($data | measure).Count
@@ -138,8 +140,19 @@ if( ![System.IO.Path]::IsPathRooted( $outputFile ) ) {
 	$outputFile = Join-Path $PWD $outputFile
 }
 
-$filteredRecords = $data | ?{ [scriptblock]::Create($filter.ToString().Replace( "$_", "$args[0]") ).InvokeReturnAsIs($_) }
-$filteredRecordCount = ($filteredRecords | measure).Count
+if( !$filter ) {
+	$filteredRecords = $data
+	$filteredRecordCount = $recordCount
+} else {
+	Write-Progress -Activity "Filtering records" -Status "Filtering..." -PercentComplete 0
+	$ri = 0
+	$filteredRecords = $data | ?{ 
+		Write-Progress -Activity "Filtering records" -Status "Filtering..." -PercentComplete (100 * ( $ri++ / $recordCount ) )	
+		[scriptblock]::Create($filter.ToString().Replace( "$_", "$args[0]") ).InvokeReturnAsIs($_) 
+	}
+	$filteredRecordCount = ($filteredRecords | measure).Count
+	Write-Progress -Activity "Filtering records" -Status "Filtering..." -PercentComplete 100 -Completed
+}
 if( $filteredRecordCount -ne $recordCount ) {
 	Write-Host "Filtered out $filteredRecordCount records matching $($filter.ToString())"
 }
@@ -149,11 +162,16 @@ function saveCommandBatchToFile( $CommandBatch, $outputFile, $chunkNumber ) {
 	$CommandBatch.Save( $fileName )
 	resolve-path $fileName
 }
+function tellProgress( $status, $percentComplete = (100 * ( $recordNumber / $filteredRecordCount )) ) {
+	Write-Progress -Activity "Sending command batches..." -Status "Chunk: $chunkNumber" -CurrentOperation $status -PercentComplete $percentComplete -Completed:$($percentComplete -eq 100)
+}
+
 
 $chunks = [int]([Math]::Ceiling( $filteredRecordCount / $chunkSize ))
 $chunkNumber = 0
 $currentBatchId = $batchId
 $recordNumber = 0
+tellProgress "Processing records..." 0
 foreach ($record in $filteredRecords ){
 	$recordNumber += 1
 	if( !$CommandBatch ) {
@@ -161,6 +179,7 @@ foreach ($record in $filteredRecords ){
 		if( $chunks -gt 1 ) {
 			$currentBatchId = "{0} - chunk {1}" -f $batchId.Trim(), $chunkNumber
 		}
+		tellProgress "Creating batch #$chunkNumber"
 		$CommandBatch = [xml]@"
 <?xml version="1.0" encoding="utf-8"?>
 		<CommandBatch xmlns="$xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -169,6 +188,7 @@ foreach ($record in $filteredRecords ){
 "@
 	}
 	
+	tellProgress "Creating command #$recordNumber"
     $Command = $CommandBatch.CreateElement("Command", $xmlns)
     $Command.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
 	if( $record.CommandName ) {
@@ -192,10 +212,13 @@ foreach ($record in $filteredRecords ){
     }
     $CommandBatch.CommandBatch.AppendChild($Command) | out-null
 	if( ( $recordNumber % $chunkSize ) -eq 0 ) {
+		tellProgress "Sending chunk #$chunkNumber"
 		saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
 		$CommandBatch = $null
 	}	
 }
 if( $CommandBatch ) {	
+	tellProgress "Sending last chunk #$chunkNumber"
 	saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
 }
+tellProgress "All chunks done!" 100
