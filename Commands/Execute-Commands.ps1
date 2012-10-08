@@ -59,7 +59,11 @@ if(!$? -or !(Test-Path $outputFile)) {
 $sw.Stop()
 
 try {
-	$xml = ([xml](gc $outputFile)).CommandBatchResponse
+	$content = gc $outputFile
+	if( $content -notmatch "<CommandBatchResponse" ) {
+		throw "Cannot find root element"
+	}
+	$xml = ([xml]$content).CommandBatchResponse
 } catch {
 	Write-Error ("Error in XML: {0}" -f $_ )
 	exit 4
