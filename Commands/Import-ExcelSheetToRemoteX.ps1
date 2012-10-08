@@ -42,7 +42,7 @@ param(
 	[parameter(mandatory=$true, parametersetname="CSV", valuefrompipeline=$true)]
 	[String[]] $csvFiles,
 	[parameter(mandatory=$false)]
-	[scriptblock] $rowFilter = { $true },
+	[scriptblock] $rowFilter = $null,
 	[parameter(mandatory=$true)]
 	$commandName,
 	[parameter(mandatory=$true)]
