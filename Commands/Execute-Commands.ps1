@@ -66,16 +66,24 @@ try {
 }
 
 Write-Host "Command batch execution took $($sw.Elapsed.Minutes)m $($sw.Elapsed.Seconds)s"
-Write-Host ""
-Write-Host ("Response written to {0}" -f $outputFile)
-Write-Host ("cURL trace output written to {0}" -f $traceFile)
 
 if($xml.HasErrors -ne "true") {
 	Write-Host "Successfully executed commands:"
 	$exitCode = 0
+	if($DebugPreference -eq "SilentlyContinue") {
+		$traceFile,$outputFile | rm
+	}
 } else {
 	Write-Host -ForegroundColor Red "Command execution failed!"
 	$exitCode = 1
+}
+
+Write-Host ""
+if( Test-Path $outputFile ) {
+	Write-Host ("Response written to {0}" -f $outputFile)
+}
+if( Test-Path $traceFile ) {
+	Write-Host ("cURL trace output written to {0}" -f $traceFile)
 }
 
 if( !$noOutput) {
