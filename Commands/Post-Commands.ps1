@@ -6,31 +6,28 @@
 	Just execute the functions and pipe the result to this script.
 .PARAMETER command
 	The commands to be executed (from the pipeline)
-.PARAMETER ServiceUri
-	The url to the web service - must end with /api
-.PARAMETER Username
-	The username to authenticate as
-.PARAMETER Password
-	The password to use for authentication
 #>
 param( 
-	[parameter(mandatory=$true, valuefrompipeline=$true)]
-	$command,
-	[parameter(mandatory=$true)]
-	[ValidateScript({ $_ -imatch "^https?://.+/api/?$" })]
-	$ServiceUri,
-	[parameter(mandatory=$true)]
-	$Username,
-	[parameter(mandatory=$true)]
-	$Password,
 	[parameter(mandatory=$false)]
 	[int] $chunkSize = 200,
 	[parameter(mandatory=$false)]
-	$batchId = "CommandBatch"
+	$batchId = "CommandBatch",
+	[parameter(mandatory=$true, valuefrompipeline=$true)]
+	$command
 )
 begin {
 	$ScriptDir = $MyInvocation.MyCommand.Path | Split-Path
 
+	$ConnectString = $null
+	if($env:RXA_COMMANDS_CS) {
+		$ConnectString = [System.Runtime.InteropServices.marshal]::PtrToStringAuto([System.Runtime.InteropServices.marshal]::SecureStringToBSTR( ( $env:RXA_COMMANDS_CS | ConvertTo-SecureString ) ) )
+	}
+	if($ConnectString) {
+		$ServiceUri, $Username, $Password = $ConnectString.Split( "`t" )
+	} else {
+		Write-Error "Missing credentials - you must run get-availablecommands.ps1 before using Post-Commands"
+		break
+	}
 	$xmlns = "http://schemas.remotex.net/Apps/201207/Commands"
 	$commands = @()
 	$cred = "{0}:{1}" -f $Username, $Password

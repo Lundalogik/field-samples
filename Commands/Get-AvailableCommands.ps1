@@ -13,5 +13,8 @@ function curlGet( $ServiceUri, $Username, $Password, $href ) {
 	[xml](curl -s -u $cred -H 'Accept: application/xml' $ServiceUri/$href)
 }
 
+# Save credentials
+$env:RXA_COMMANDS_CS = "{0}`t{1}`t{2}" -f $ServiceUri,$Username,$Password | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString
+
 $availableCommands = curlGet $ServiceUri $Username $Password "commands"
 $availableCommands.AvailableCommands.Commands.Command
