@@ -34,7 +34,7 @@ To use Execute-Commands.ps1 you will need to supply some arguments.
 * ServiceUri - Refers to the URL which ends with '/api'
 * Username and Password - The credentials to use when authenticating with the API
 
-So for example you could send the CommandBatch [CreateCaseSample.xml](CreateCaseSample.xml) to a local API instance using the following command line:
+So for example you could send the CommandBatch [CreateCaseSample.xml](https://github.com/remotex/Samples/blob/master/Commands/CreateCaseSample.xml) to a local API instance using the following command line:
 
     PS C:\Samples> .\Execute-Commands.ps1 CreateCaseSample.xml -ServiceUri http://localhost:8100/api -Username user -Password pass -Debug
     Response written to C:\Samples\Commands\CreateCaseWithLogMessage_output.xml
@@ -64,8 +64,8 @@ Get-AvailableCommands.ps1
 This script lists all commands that are available in a RemoteX Applications instance.
 You can use its output to examine what the commands are and their parameters, but most important of all is how its output can be used with other scripts.
 Pipe it to: 
-* ..[Export-Functions.ps1](Export-Functions.ps1) to get a complete Commands API client with parameter tab completion and command help
-* ..[Export-ExportExcelWorkBook.ps1](Export-ExportExcelWorkBook.ps1) to get an instance specific Excel work book that can be used to create bulk data import files
+* ..[Export-Functions.ps1](https://github.com/remotex/Samples/blob/master/Commands/Export-Functions.ps1) to get a complete Commands API client with parameter tab completion and command help
+* ..[Export-ExportExcelWorkBook.ps1](https://github.com/remotex/Samples/blob/master/Commands/Export-ExportExcelWorkBook.ps1) to get an instance specific Excel work book that can be used to create bulk data import files
 
 Export-Functions.ps1
 --------------------
@@ -96,6 +96,16 @@ Here is how you can create log messages from a CSV file using the generated scri
            Value: another message
     Affected items:
        log/mylog (Revision: )
+
+Export-ExcelWorkBook.ps1
+------------------------
+
+This script will generate an Excel work book for you to fill with as much data you want!
+It will both generate columns for system fields and instance specific fields.
+When your are done, you can use [Import-ExcelSheetToRemoteX.ps1](https://github.com/remotex/Samples/blob/master/Commands/Import-ExcelSheetToRemoteX.ps1) to import the data, sheet by sheet.
+
+
+    C:\Samples> .\Get-AvailableCommands.ps1 -ServiceUri http://localhost:8100/api -Username user | .\Export-ExcelWorkBook.ps1 importtemplate.xlsx
 
 
 Other useful tools
