@@ -16,19 +16,23 @@ begin {
 	Write-Progress -Activity "Initiating" -Status "Starting Excel..." -PercentComplete 0
 
 	# Need some Win32 functionality to get the PID of the Excel app
-	Add-Type -TypeDefinition @"
-	using System;
-	using System.Runtime.InteropServices;
+	try {
+		[Win32Api] | Out-Null
+	} catch {
+		Add-Type -TypeDefinition @"
+		using System;
+		using System.Runtime.InteropServices;
 
-	public static class Win32Api
-	{
-	[System.Runtime.InteropServices.DllImportAttribute( "User32.dll", EntryPoint =  "GetWindowThreadProcessId" )]
-	public static extern int GetWindowThreadProcessId ( [System.Runtime.InteropServices.InAttribute()] System.IntPtr hWnd, out int lpdwProcessId );
+		public static class Win32Api
+		{
+		[System.Runtime.InteropServices.DllImportAttribute( "User32.dll", EntryPoint =  "GetWindowThreadProcessId" )]
+		public static extern int GetWindowThreadProcessId ( [System.Runtime.InteropServices.InAttribute()] System.IntPtr hWnd, out int lpdwProcessId );
 
-	[DllImport("User32.dll", CharSet = CharSet.Auto)]
-	public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-	}
+		[DllImport("User32.dll", CharSet = CharSet.Auto)]
+		public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+		}
 "@
+	}
 	$xl = New-Object -com "Excel.Application" 
 	$excelPid = [IntPtr]::Zero
 	[Win32Api]::GetWindowThreadProcessId( $xl.HWND, [ref] $excelPid ) | Out-Null
@@ -80,6 +84,8 @@ end {
 				$cells.Item(1, $columnIndex++).AddComment( $_.Description ) | Out-Null
 				$itemNumber++
 			}
+			$cells.Columns.AutoFit() | Out-Null
+			$cells.NumberFormat = '@'
 		}
 		
 		Write-Progress -Activity "Creating work sheets" -Status "Saving work book" -PercentComplete 0
