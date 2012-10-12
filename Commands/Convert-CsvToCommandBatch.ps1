@@ -163,7 +163,7 @@ function saveCommandBatchToFile( $CommandBatch, $outputFile, $chunkNumber ) {
 	resolve-path $fileName
 }
 function tellProgress( $status, $percentComplete = (100 * ( $recordNumber / $filteredRecordCount )) ) {
-	Write-Progress -Activity "Sending command batches..." -Status "Chunk: $chunkNumber" -CurrentOperation $status -PercentComplete $percentComplete -Completed:$($percentComplete -eq 100)
+	Write-Progress -Activity "Chunking records into command batches..." -Status "Chunk: $chunkNumber" -CurrentOperation $status -PercentComplete $percentComplete -Completed:$($percentComplete -eq 100)
 }
 
 
@@ -212,13 +212,13 @@ foreach ($record in $filteredRecords ){
     }
     $CommandBatch.CommandBatch.AppendChild($Command) | out-null
 	if( ( $recordNumber % $chunkSize ) -eq 0 ) {
-		tellProgress "Sending chunk #$chunkNumber"
+		tellProgress "Creating chunk #$chunkNumber"
 		saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
 		$CommandBatch = $null
 	}	
 }
 if( $CommandBatch ) {	
-	tellProgress "Sending last chunk #$chunkNumber"
+	tellProgress "Creating last chunk #$chunkNumber"
 	saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
 }
 tellProgress "All chunks done!" 100
