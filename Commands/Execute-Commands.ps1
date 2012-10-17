@@ -45,12 +45,16 @@ if( $file.Extension -ne ".xml" ) {
 $outputFile = "{0}\{1}_output.xml" -f $file.Directory, $file.BaseName
 $traceFile = "{0}\{1}_trace.txt" -f $file.Directory, $file.BaseName
 
-$outputFile,$traceFile | rm -Force -ErrorAction SilentlyContinue
+if( Test-Path $outputFile ) {
+	rm -Force $outputFile
+}
+if( Test-path $traceFile ) {
+	rm -Force $traceFile
+}
 
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
-$sw = New-Object System.Diagnostics.Stopwatch
-$sw.Start()
+$sw = [System.Diagnostics.Stopwatch]::StartNew()
 curl -s --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
 if(!$? -or !(Test-Path $outputFile)) {
 	Write-Error ("Curl failed with error {0}" -f $LASTEXITCODE)
@@ -61,7 +65,7 @@ $sw.Stop()
 try {
 	$content = gc $outputFile
 	if( $content -notmatch "<CommandBatchResponse" ) {
-		throw "Cannot find root element"
+		throw ("Cannot find root element: {0}" -f ($content -replace "<[^>]+>",""))
 	}
 	$xml = ([xml]$content).CommandBatchResponse
 } catch {
