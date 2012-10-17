@@ -77,7 +77,8 @@ param(
 	[parameter(mandatory=$false)]
 	[int] $chunkSize = 200,
 	[parameter(mandatory=$false)]
-	$batchId = "CommandBatch"
+	$batchId = "CommandBatch",
+	$delimiter = ","
 )
 
 $dataFile = $csvFile
@@ -87,7 +88,8 @@ if( $reencodeFromEncoding ) {
 	gc $csvFile -Encoding $reencodeFromEncoding | Out-File -Encoding UTF8 -FilePath $dataFile
 	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 100 -Completed
 }
-$data = Import-Csv $dataFile
+$lines = gc $dataFile -Encoding UTF8
+$data = $lines[1..($lines.Count-1)] | ConvertFrom-Csv -Header $lines[0].TrimEnd($delimiter).Split($delimiter) -Delimiter $delimiter
 $recordCount = ($data | measure).Count
 Write-Host "Found $recordCount records"
 
@@ -96,7 +98,6 @@ if(!$ignoredColumns) { $ignoredColumns = @() }
 if(!$columnValuePrefix) { $columnValuePrefix = @{} }
 
 $xmlns = "http://schemas.remotex.net/Apps/201207/Commands"
-
 $header = $data | Select -first 1
 $attrs = $header | gm -MemberType NoteProperty | ?{ $_.Name -notmatch "\[?CommandName\]?" -and $_.Name -notmatch "\[?Target\]?" } | Select -ExpandProperty Name
 $commandNameColumn = $header | gm -MemberType NoteProperty | ?{ $_.Name -match "\[?CommandName\]?" } | Select -ExpandProperty Name
