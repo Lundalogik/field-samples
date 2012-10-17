@@ -52,7 +52,11 @@ param(
 	[parameter(mandatory=$true)]
 	$password,
 	[parameter(mandatory=$false)]
-	[int] $chunkSize = 200
+	[int] $chunkSize = 200,
+	[parameter(mandatory=$false,helpmessage="Removes the delay between batches")]
+	[Switch] $noDelay,
+	[parameter(mandatory=$false,helpmessage="Time to wait between batches - a factor of the time taken for the last batch to complete")]
+	[decimal] $delayFactor = 1
 )
 
 if( $excelFile -and !(Get-Command -ErrorAction SilentlyContinue Convert-ExcelToCsv.ps1) ) {
@@ -95,17 +99,28 @@ $csvFiles | %{
 	$chunks = ($commandBatchChunks | measure).Count
 	Write-Host "Data was split into $chunks chunks"
 	$chunk = 0
+	$delay = 0
 	$commandBatchChunks | %{
 		$chunk += 1
 		$commandBatchPath = $_.Path
+		
+		if( !$noDelay -and $delay -gt 0 ) {
+			Write-Host ("Waiting {0:f2} seconds before sending the next command batch..." -f $delay)
+			sleep -Seconds $delay
+		}
 		Write-Host ("Sending commands to $serviceUri using $commandBatchPath ({0:f2}Mb in size)" -f ((gi $commandBatchPath).Length/1mb))
+		$sw = [System.Diagnostics.Stopwatch]::StartNew()
+		$cmderr = @()
 		executeCommands -Path $commandBatchPath `
 						-serviceuri $serviceUri `
 						-username $username `
 						-password $password `
-						-nooutput
-		if(!$?) {
-			Write-Error "Failed to execute command batch $commandBatchPath"
+						-nooutput `
+						-errorvariable cmderr
+		$delay = $sw.Elapsed.TotalSeconds * $delayFactor
+
+		if($cmderr) {
+			Write-Error "Failed to execute command batch $commandBatchPath: $cmderr"
 			$outputfile = $commandBatchPath -replace "\.xml$","_output.xml"
 			$ErrorReport = $commandBatchPath -replace "\.xml$","_errors.csv"
 			if( Test-Path $outputfile ) {
