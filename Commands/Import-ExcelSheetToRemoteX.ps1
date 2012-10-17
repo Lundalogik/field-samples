@@ -43,7 +43,7 @@ param(
 	[String[]] $csvFiles,
 	[parameter(mandatory=$false)]
 	[scriptblock] $rowFilter = $null,
-	[parameter(mandatory=$true)]
+	[parameter(mandatory=$false)]
 	$commandName,
 	[parameter(mandatory=$true)]
 	$serviceUri,
