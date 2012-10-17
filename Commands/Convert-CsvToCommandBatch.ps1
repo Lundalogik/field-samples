@@ -97,7 +97,10 @@ if(!$columnValuePrefix) { $columnValuePrefix = @{} }
 
 $xmlns = "http://schemas.remotex.net/Apps/201207/Commands"
 
-$attrs = $data | Select -first 1 | gm -MemberType NoteProperty | ?{ $_.Name -ne "CommandName" } | Select -ExpandProperty Name
+$header = $data | Select -first 1
+$attrs = $header | gm -MemberType NoteProperty | ?{ $_.Name -notmatch "\[?CommandName\]?" -and $_.Name -notmatch "\[?Target\]?" } | Select -ExpandProperty Name
+$commandNameColumn = $header | gm -MemberType NoteProperty | ?{ $_.Name -match "\[?CommandName\]?" } | Select -ExpandProperty Name
+$targetColumn = $header | gm -MemberType NoteProperty | ?{ $_.Name -match "\[?Target\]?" } | Select -ExpandProperty Name
 
 function getParameterNameForColumn( $columnName ) {
 	$columnName = $columnName.Trim()
@@ -191,10 +194,15 @@ foreach ($record in $filteredRecords ){
 	tellProgress "Creating command #$recordNumber"
     $Command = $CommandBatch.CreateElement("Command", $xmlns)
     $Command.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
-	if( $record.CommandName ) {
-    	$Command.Name = $record.CommandName.ToString()
+	if( $commandNameColumn -and $record."$commandNameColumn" ) {
+    	$Command.Name = $record."$commandNameColumn".ToString()
 	} else {
 		$Command.Name = $defaultCommandName
+	}
+    
+	if( $targetColumn -and $record."$targetColumn" ) {
+	    $Command.AppendChild($CommandBatch.CreateElement("Target", $xmlns)) | out-null
+    	$Command.Target = $record."$targetColumn".ToString()
 	}
     
     foreach ($attr in $attrs){
