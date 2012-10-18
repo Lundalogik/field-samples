@@ -38,7 +38,7 @@ param(
 	[parameter(mandatory=$true, parametersetname="Excel")]
 	$excelFile,
 	[parameter(mandatory=$true, parametersetname="Excel")]
-	$sheetName,
+	[String[]] $sheetName,
 	[parameter(mandatory=$true, parametersetname="CSV", valuefrompipeline=$true)]
 	[String[]] $csvFiles,
 	[parameter(mandatory=$false)]
