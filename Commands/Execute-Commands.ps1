@@ -83,6 +83,7 @@ if($xml.HasErrors -ne "true") {
 	}
 } else {
 	Write-Host -ForegroundColor Red "Command execution failed!"
+	$noOutput = $false
 	$exitCode = 1
 }
 
@@ -98,8 +99,8 @@ if( !$noOutput) {
 	$xml.CommandResponse | %{
 		Write-Host -NoNewline "Command: "
 		Write-Host -ForegroundColor Yellow $_.Command.Name
-		if( $_.HasErrors ) {
-			Write-Host -NoNewline "  Error: "
+		if( $_.HasErrors -eq "true" ) {
+			Write-Host -ForegroundColor Red -NoNewline "  Error: "
 			Write-Host -ForegroundColor Red $_.ErrorMessage
 		}
 		$_.Command.Parameter | %{
