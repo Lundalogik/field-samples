@@ -209,7 +209,7 @@ foreach ($record in $filteredRecords ){
     foreach ($attr in $attrs){
         $val = $record."$attr"
         if($val){
-			(getParameterNameForColumn ($attr.ToString())).Split("|") | %{
+			(getParameterNameForColumn ($attr.ToString())).Split("|") | ?{ ![string]::IsNullOrEmpty( $_ ) } | %{
 	            $Parameter = $CommandBatch.CreateElement("Parameter", $xmlns)
 	            $Parameter.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
 	            $Parameter.Name = $_.ToString()
