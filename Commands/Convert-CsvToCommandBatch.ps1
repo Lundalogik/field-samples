@@ -89,7 +89,7 @@ if( $reencodeFromEncoding ) {
 	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 100 -Completed
 }
 $lines = gc $dataFile -Encoding UTF8
-$data = $lines[1..($lines.Count-1)] | ConvertFrom-Csv -Header $lines[0].TrimEnd($delimiter).Split($delimiter) -Delimiter $delimiter
+$data = $lines[1..($lines.Count-1)] | ?{ $_.Trim($delimiter) } | ConvertFrom-Csv -Header $lines[0].TrimEnd($delimiter).Split($delimiter) -Delimiter $delimiter
 $recordCount = ($data | measure).Count
 Write-Host "Found $recordCount records"
 
