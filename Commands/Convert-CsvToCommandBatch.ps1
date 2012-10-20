@@ -71,7 +71,7 @@ param(
 	[parameter(mandatory=$false)]
 	[hashtable]$columnValuePrefix,
 	[parameter(mandatory=$false)]
-	[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding] $reencodeFromEncoding,
+	[Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding] $Encoding = [Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]::UTF8,
 	[parameter(mandatory=$false)]
 	[Switch] $preview,
 	[parameter(mandatory=$false)]
@@ -81,16 +81,10 @@ param(
 	$delimiter = ","
 )
 
-$dataFile = $csvFile
-if( $reencodeFromEncoding ) {
-	$dataFile = [System.IO.Path]::GetTempFileName()
-	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 0
-	gc $csvFile -Encoding $reencodeFromEncoding | Out-File -Encoding UTF8 -FilePath $dataFile
-	Write-Progress -Activity "Reencoding file to UTF8" -Status "Working..." -PercentComplete 100 -Completed
-}
-$lines = gc $dataFile -Encoding UTF8
-$data = $lines[1..($lines.Count-1)] | ?{ $_.Trim($delimiter) } | ConvertFrom-Csv -Header $lines[0].TrimEnd($delimiter).Split($delimiter) -Delimiter $delimiter
-$recordCount = ($data | measure).Count
+$lines = gc $csvFile -Encoding $Encoding
+$header = $lines[0].TrimEnd($delimiter).Split($delimiter)
+$data = $lines | select -Skip 1 | ?{ $_.Trim($delimiter) } | ConvertFrom-Csv -Header $header -Delimiter $delimiter
+$recordCount = $lines.Length-1
 Write-Host "Found $recordCount records"
 
 if(!$columnToParameterMap) { $columnToParameterMap = @{} }
@@ -98,10 +92,9 @@ if(!$ignoredColumns) { $ignoredColumns = @() }
 if(!$columnValuePrefix) { $columnValuePrefix = @{} }
 
 $xmlns = "http://schemas.remotex.net/Apps/201207/Commands"
-$header = $data | Select -first 1
-$attrs = $header | gm -MemberType NoteProperty | ?{ $_.Name -notmatch "\[?CommandName\]?" -and $_.Name -notmatch "\[?Target\]?" } | Select -ExpandProperty Name
-$commandNameColumn = $header | gm -MemberType NoteProperty | ?{ $_.Name -match "\[?CommandName\]?" } | Select -ExpandProperty Name
-$targetColumn = $header | gm -MemberType NoteProperty | ?{ $_.Name -match "\[?Target\]?" } | Select -ExpandProperty Name
+$attrs = $header | ?{ $_ -notmatch "\[?CommandName\]?" -and $_ -notmatch "\[?Target\]?" } 
+$commandNameColumn = $header | ?{ $_ -match "\[?CommandName\]?" }
+$targetColumn = $header | ?{ $_ -match "[\[\|]?Target[\]\|]?" }
 
 function getParameterNameForColumn( $columnName ) {
 	$columnName = $columnName.Trim()
@@ -120,7 +113,7 @@ function getParameterValueForColumn( $columnName, $value ) {
 	if( $columnValuePrefix.ContainsKey( $columnName ) ) {
 		[string]::Concat( $columnValuePrefix[$columnName], $value )
 	} else {
-		$value
+		$value -replace "&","&amp;"
 	}
 }
 
@@ -160,74 +153,87 @@ if( !$filter ) {
 if( $filteredRecordCount -ne $recordCount ) {
 	Write-Host "Filtered out $filteredRecordCount records matching $($filter.ToString())"
 }
-
-function saveCommandBatchToFile( $CommandBatch, $outputFile, $chunkNumber ) {
-	$fileName = $outputFile -replace "\.xml$","_Chunk-$chunkNumber.xml"
-	$CommandBatch.Save( $fileName )
-	resolve-path $fileName
-}
-function tellProgress( $status, $percentComplete = (100 * ( $recordNumber / $filteredRecordCount )) ) {
-	Write-Progress -Activity "Chunking records into command batches..." -Status "Chunk: $chunkNumber" -CurrentOperation $status -PercentComplete $percentComplete -Completed:$($percentComplete -eq 100)
+if(!$filteredRecordCount) {
+	return
 }
 
+function tellProgress( $status, $percentComplete, $SecondsRemaining = -1 ) {
+	Write-Progress -Activity "Chunking records into command batches..." -Status "Chunk: $chunkNumber" -CurrentOperation $status -PercentComplete $percentComplete -Completed:$($percentComplete -eq 100) -SecondsRemaining $SecondsRemaining
+}
 
-$chunks = [int]([Math]::Ceiling( $filteredRecordCount / $chunkSize ))
-$chunkNumber = 0
-$currentBatchId = $batchId
-$recordNumber = 0
-tellProgress "Processing records..." 0
-foreach ($record in $filteredRecords ){
-	$recordNumber += 1
-	if( !$CommandBatch ) {
-		$chunkNumber += 1
-		if( $chunks -gt 1 ) {
-			$currentBatchId = "{0} - chunk {1}" -f $batchId.Trim(), $chunkNumber
+function Chunk( $size ) {
+	begin { 
+		$chunk = @()
+		$count = 0 
+	} 
+	process { 
+		$chunk += $_
+		if( ++$count -eq $size ) { 
+			@(, $chunk )
+			$chunk = @()
+			$count = 0 
+		} 
+	}
+	end { 
+		if( $chunk ) { 
+			@(, $chunk ) 
 		}
-		tellProgress "Creating batch #$chunkNumber"
-		$CommandBatch = [xml]@"
+	}
+}
+
+function AsCommand {
+	begin {
+		$recordNumber = 0
+	}
+	process {
+		$record = $_
+		$recordNumber++
+		if( $commandNameColumn -and $record."$commandNameColumn" ) {
+	    	$CommandName = $record."$commandNameColumn"
+		} elseif( $defaultCommandName ) {
+			$CommandName = $defaultCommandName
+		} else {
+			throw "Error: Can't figure command for record $record"
+		}
+	    $Command = "<Command>`r`n<Name>$CommandName</Name>`r`n"
+		if( $targetColumn -and $record."$targetColumn" ) {
+	    	$Command += "<Target>{0}</Target>`r`n" -f $record."$targetColumn"
+		}
+	    
+	    foreach ($attr in $attrs){
+	        $val = $record."$attr"
+	        if($val){
+				(getParameterNameForColumn ($attr.ToString())).Split("|") | ?{ ![string]::IsNullOrEmpty( $_ ) } | %{
+		            $Command += "<Parameter><Name>{0}</Name><Value>{1}</Value></Parameter>`r`n" -f $_, (getParameterValueForColumn $_ $val.Trim()).Trim()
+				}
+	        }
+	    }
+		"$Command</Command>"
+	}
+}
+
+function SaveAsBatch {
+	begin {
+		$chunkNumber = 0
+		$sw = [System.Diagnostics.Stopwatch]::StartNew()
+	}
+	process {
+		$chunk = $_
+		$chunkNumber++
+		$currentBatchId = "{0} - chunk {1}" -f $batchId.Trim(), $chunkNumber
+		tellProgress "Creating batch #$chunkNumber" (100 * ( $chunkNumber / $chunks )) (($chunks-$chunkNumber) * ($sw.Elapsed.TotalSeconds / $chunkNumber))
+		$fileName = $outputFile -replace "\.xml$","_Chunk-$chunkNumber.xml"
+		@"
 <?xml version="1.0" encoding="utf-8"?>
-		<CommandBatch xmlns="$xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-		<Id>$currentBatchId</Id>
-		</CommandBatch>
-"@
+<CommandBatch xmlns="$xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Id>$currentBatchId</Id>
+"@ | Set-Content -Encoding UTF8 -Path $fileName
+		$chunk | Add-Content -Encoding UTF8 -Path $fileName
+		[byte[]][char[]]"</CommandBatch>" | Add-Content -Encoding byte -Path $fileName
+		Resolve-Path $fileName
 	}
-	
-	tellProgress "Creating command #$recordNumber"
-    $Command = $CommandBatch.CreateElement("Command", $xmlns)
-    $Command.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
-	if( $commandNameColumn -and $record."$commandNameColumn" ) {
-    	$Command.Name = $record."$commandNameColumn".ToString()
-	} else {
-		$Command.Name = $defaultCommandName
-	}
-    
-	if( $targetColumn -and $record."$targetColumn" ) {
-	    $Command.AppendChild($CommandBatch.CreateElement("Target", $xmlns)) | out-null
-    	$Command.Target = $record."$targetColumn".ToString()
-	}
-    
-    foreach ($attr in $attrs){
-        $val = $record."$attr"
-        if($val){
-			(getParameterNameForColumn ($attr.ToString())).Split("|") | ?{ ![string]::IsNullOrEmpty( $_ ) } | %{
-	            $Parameter = $CommandBatch.CreateElement("Parameter", $xmlns)
-	            $Parameter.AppendChild($CommandBatch.CreateElement("Name", $xmlns)) | out-null
-	            $Parameter.Name = $_.ToString()
-	            $Parameter.AppendChild($CommandBatch.CreateElement("Value", $xmlns)) | out-null
-	            $Parameter.Value = (getParameterValueForColumn $_ $val.ToString().Trim()).Trim()
-	            $Command.AppendChild($Parameter) | Out-Null
-			}
-        }
-    }
-    $CommandBatch.CommandBatch.AppendChild($Command) | out-null
-	if( ( $recordNumber % $chunkSize ) -eq 0 ) {
-		tellProgress "Creating chunk #$chunkNumber"
-		saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
-		$CommandBatch = $null
-	}	
 }
-if( $CommandBatch ) {	
-	tellProgress "Creating last chunk #$chunkNumber"
-	saveCommandBatchToFile $CommandBatch $outputFile $chunkNumber
-}
-tellProgress "All chunks done!" 100
+$chunks = [int]([Math]::Ceiling( $filteredRecordCount / $chunkSize ))
+tellProgress "Processing records..." 0
+$filteredRecords | AsCommand | Chunk -size $chunkSize | SaveAsBatch
+tellProgress "All chunks done!" 100 0
