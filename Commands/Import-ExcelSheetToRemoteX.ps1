@@ -52,7 +52,7 @@ param(
 	[parameter(mandatory=$true)]
 	$password,
 	[parameter(mandatory=$false)]
-	[int] $chunkSize = 200,
+	[int] $commandBatchCountize = 200,
 	[parameter(mandatory=$false,helpmessage="Removes the delay between batches")]
 	[Switch] $noDelay,
 	[parameter(mandatory=$false,helpmessage="Time to wait between batches - a factor of the time taken for the last batch to complete")]
@@ -83,65 +83,75 @@ if( $excelFile ) {
 		exit 1
 	}
 }
-$csvFiles | %{
+$swtotal = [System.Diagnostics.Stopwatch]::StartNew()
+$commandBatches = $csvFiles | %{
 	$commandBatchPath = $_.Path -replace "\.csv$","_CommandBatch.xml"
 	$commandBatchChunks = csvToCommandBatch -csvFile $_.Path `
 					  -outputFile $commandBatchPath `
 					  -defaultCommandName $commandName `
 					  -filter $rowFilter `
-					  -chunkSize $chunkSize `
-					  -reencodefromencoding UTF7
+					  -chunkSize $commandBatchCountize `
+					  -encoding UTF7
 	if( !$commandBatchChunks ) {
-		Write-Error "Command batch files were not created"
+		Write-Error "Command batch files were not created for $($_.Path). Empty file?"
 		exit 1
 	}
-	
-	$chunks = ($commandBatchChunks | measure).Count
-	Write-Host "Data was split into $chunks chunks"
-	$chunk = 0
-	$delay = 0
-	$commandBatchChunks | %{
-		$chunk += 1
-		$commandBatchPath = $_.Path
-		
-		if( !$noDelay -and $delay -gt 0 ) {
-			Write-Host ("Waiting {0:f2} seconds before sending the next command batch..." -f $delay)
-			sleep -Seconds $delay
-		}
-		Write-Host ("Sending commands to $serviceUri using $commandBatchPath ({0:f2}Mb in size)" -f ((gi $commandBatchPath).Length/1mb))
-		$sw = [System.Diagnostics.Stopwatch]::StartNew()
-		$cmderr = @()
-		executeCommands -Path $commandBatchPath `
-						-serviceuri $serviceUri `
-						-username $username `
-						-password $password `
-						-nooutput `
-						-errorvariable cmderr
-		$delay = $sw.Elapsed.TotalSeconds * $delayFactor
+	$commandBatchChunks
+}
 
-		if($cmderr) {
-			Write-Error "Failed to execute command batch $commandBatchPath: $cmderr"
-			$outputfile = $commandBatchPath -replace "\.xml$","_output.xml"
-			$ErrorReport = $commandBatchPath -replace "\.xml$","_errors.csv"
-			if( Test-Path $outputfile ) {
-				Write-Host "Creating error report $errorReport"
-				try {
-					$xml = [xml](gc $outputfile)
-					$err = $xml.CommandBatchResponse.CommandResponse | ?{ $_.HasErrors -eq "true" }  | %{ 
-						$command = $_ | select ErrorMessage
-						$_.Command.Parameter | ?{ $_.Name } | %{ 
-							$command | add-member -membertype noteproperty -name $_.Name -valu $_.Value 
-						}
-						$command 
-					} 
-					$err | Export-Csv -NoTypeInformation -Path $ErrorReport -Encoding utf8
-					$err 				
-				} catch {
-					Write-Error "Error creating error report! $_"
-				}
+$commandBatchCount = ($commandBatches | measure).Count
+Write-Host "Data was split into $commandBatchCount chunks"
+$commandBatchIndex = 0
+$delay = 0
+$commandBatches | %{
+	$commandBatchPath = $_.Path
+	$percentComplete = (100 * ( $commandBatchIndex / $commandBatchCount ))
+	$commandBatchIndex++
+	if( !$noDelay -and $delay -gt 0 ) {
+		$secondsRemaining = (($commandBatchCount-$commandBatchIndex+1) * (($swtotal.Elapsed.TotalSeconds / $commandBatchIndex) + $delay))
+		Write-Progress -Activity ("Sending commands to $serviceUri using $commandBatchPath ({0:f2}Mb in size)" -f ((gi $commandBatchPath).Length/1mb)) `
+						-Status ("Waiting {0:f2} seconds before sending the next command batch..." -f $delay) `
+						-SecondsRemaining $secondsRemaining `
+						-PercentComplete $percentComplete
+		sleep -Seconds $delay
+	}
+	$secondsRemaining = (($commandBatchCount-$commandBatchIndex+1) * (($swtotal.Elapsed.TotalSeconds / $commandBatchIndex) + $delay))
+	Write-Progress -Activity ("Sending commands to $serviceUri using $commandBatchPath ({0:f2}Mb in size)" -f ((gi $commandBatchPath).Length/1mb)) `
+					-Status "Sending..." `
+					-SecondsRemaining $secondsRemaining `
+					-PercentComplete $percentComplete
+	$sw = [System.Diagnostics.Stopwatch]::StartNew()
+	$cmderr = @()
+	executeCommands -Path $commandBatchPath `
+					-serviceuri $serviceUri `
+					-username $username `
+					-password $password `
+					-nooutput `
+					-errorvariable cmderr
+	$delay = $sw.Elapsed.TotalSeconds * $delayFactor
+
+	if($cmderr) {
+		Write-Error "Failed to execute command batch $commandBatchPath: $cmderr"
+		$outputfile = $commandBatchPath -replace "\.xml$","_output.xml"
+		$ErrorReport = $commandBatchPath -replace "\.xml$","_errors.csv"
+		if( Test-Path $outputfile ) {
+			Write-Host "Creating error report $errorReport"
+			try {
+				$xml = [xml](gc $outputfile)
+				$err = $xml.CommandBatchResponse.CommandResponse | ?{ $_.HasErrors -eq "true" }  | %{ 
+					$command = $_ | select ErrorMessage
+					$_.Command.Parameter | ?{ $_.Name } | %{ 
+						$command | add-member -membertype noteproperty -name $_.Name -valu $_.Value 
+					}
+					$command 
+				} 
+				$err | Export-Csv -NoTypeInformation -Path $ErrorReport -Encoding utf8
+				$err 				
+			} catch {
+				Write-Error "Error creating error report! $_"
 			}
-			Write-Host "Stopped at chunk $chunk of $chunks"
-			exit 1
 		}
+		Write-Host "Stopped at chunk $commandBatchIndex of $commandBatchCount"
+		exit 1
 	}
 }
