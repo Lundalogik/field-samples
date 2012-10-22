@@ -84,6 +84,7 @@ if($xml.HasErrors -ne "true") {
 } else {
 	Write-Host -ForegroundColor Red "Command execution failed!"
 	$noOutput = $false
+	$outputErrorsOnly = $true
 	$exitCode = 1
 }
 
@@ -96,7 +97,7 @@ if( Test-Path $traceFile ) {
 }
 
 if( !$noOutput) {
-	$xml.CommandResponse | %{
+	$xml.CommandResponse | ?{ !$outputErrorsOnly -or $_.HasErrors -eq "true" } | %{
 		Write-Host -NoNewline "Command: "
 		Write-Host -ForegroundColor Yellow $_.Command.Name
 		if( $_.HasErrors -eq "true" ) {
