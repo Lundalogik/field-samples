@@ -52,7 +52,7 @@ param(
 	[parameter(mandatory=$true)]
 	$password,
 	[parameter(mandatory=$false)]
-	[int] $commandBatchCountize = 200,
+	[int] $chunkSize = 200,
 	[parameter(mandatory=$false,helpmessage="Removes the delay between batches")]
 	[Switch] $noDelay,
 	[parameter(mandatory=$false,helpmessage="Time to wait between batches - a factor of the time taken for the last batch to complete")]
@@ -90,7 +90,7 @@ $commandBatches = $csvFiles | %{
 					  -outputFile $commandBatchPath `
 					  -defaultCommandName $commandName `
 					  -filter $rowFilter `
-					  -chunkSize $commandBatchCountize `
+					  -chunkSize $chunkSize `
 					  -encoding UTF7
 	if( !$commandBatchChunks ) {
 		Write-Error "Command batch files were not created for $($_.Path). Empty file?"
