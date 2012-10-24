@@ -107,8 +107,10 @@ if( !$noOutput) {
 		$_.Command.Parameter | %{
 			Write-Host -NoNewline "   Parameter: "
 			Write-Host -ForegroundColor Yellow $_.Name
-			Write-Host -NoNewline "       Value: "
-			Write-Host -ForegroundColor Yellow $_.Value
+			$_.Value | %{
+				Write-Host -NoNewline "       Value: "
+				Write-Host -ForegroundColor Yellow $_
+			}
 		}
 		Write-Host "Affected items: "
 		$_.AffectedItems.Item | %{

@@ -110,10 +110,13 @@ function getParameterNameForColumn( $columnName ) {
 }
 function getParameterValueForColumn( $columnName, $value ) {
 	$columnName = $columnName.Trim()
-	if( $columnValuePrefix.ContainsKey( $columnName ) ) {
-		[string]::Concat( $columnValuePrefix[$columnName], $value )
-	} else {
-		$value -replace "&","&amp;"
+	$value.Split("|") | %{ 
+		$v = $_
+		if( $columnValuePrefix.ContainsKey( $columnName ) ) {
+			[string]::Concat( $columnValuePrefix[$columnName], $v ).Trim()
+		} else {
+			$v.Trim() -replace "&","&amp;"
+		}
 	}
 }
 
@@ -204,7 +207,8 @@ function AsCommand {
 	        $val = $record."$attr"
 	        if($val){
 				(getParameterNameForColumn ($attr.ToString())).Split("|") | ?{ ![string]::IsNullOrEmpty( $_ ) } | %{
-		            $Command += "<Parameter><Name>{0}</Name><Value>{1}</Value></Parameter>`r`n" -f $_, (getParameterValueForColumn $_ $val.Trim()).Trim()
+					$valueElements = getParameterValueForColumn $_ $val | %{ "<Value>{0}</Value>" -f $_ } | Out-String
+		            $Command += "<Parameter><Name>{0}</Name>{1}</Parameter>`r`n" -f $_, $valueElements
 				}
 	        }
 	    }
