@@ -207,7 +207,11 @@ function AsCommand {
 	        $val = $record."$attr"
 	        if($val){
 				(getParameterNameForColumn ($attr.ToString())).Split("|") | ?{ ![string]::IsNullOrEmpty( $_ ) } | %{
-					$valueElements = getParameterValueForColumn $_ $val | %{ "<Value>{0}</Value>" -f $_ } | Out-String
+					$valueElements = getParameterValueForColumn $_ $val | %{ 
+						# Trim qoutes - empty parameter values can be entered to csv by using '' or "" 
+						$parameterValue = $_.Trim(@( '''', '"' ))
+						"<Value>{0}</Value>" -f $parameterValue 
+					} | Out-String
 		            $Command += "<Parameter><Name>{0}</Name>{1}</Parameter>`r`n" -f $_, $valueElements
 				}
 	        }
