@@ -32,6 +32,9 @@
 	Password to authenticate with
 .PARAMETER chunkSize
 	The maximum size of each command batch
+.PARAMETER continueOnError
+	When a command fails, default mode is to reject all commands sent to the API.
+	This option changes this and will persist all changes made by commands that executed successfully.
 	
 #>
 param( 
@@ -56,7 +59,9 @@ param(
 	[parameter(mandatory=$false,helpmessage="Removes the delay between batches")]
 	[Switch] $noDelay,
 	[parameter(mandatory=$false,helpmessage="Time to wait between batches - a factor of the time taken for the last batch to complete")]
-	[decimal] $delayFactor = 1
+	[decimal] $delayFactor = 1,
+	[parameter(mandatory=$false,helpmessage="Persist all successful commands even if some are failing")]
+	[Switch] $continueOnError
 )
 
 if( $excelFile -and !(Get-Command -ErrorAction SilentlyContinue Convert-ExcelToCsv.ps1) ) {
@@ -91,8 +96,10 @@ $commandBatches = $csvFiles | %{
 					  -outputFile $commandBatchPath `
 					  -defaultCommandName $commandName `
 					  -filter $rowFilter `
+					  -continueOnError:$continueOnError `
 					  -chunkSize $chunkSize `
 					  -encoding UTF7
+					  
 	if( !$commandBatchChunks ) {
 		Write-Error "Command batch files were not created for $($_.Path). Empty file?"
 		exit 1
