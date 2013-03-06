@@ -131,7 +131,7 @@ $commandBatches | %{
 	$delay = $sw.Elapsed.TotalSeconds * $delayFactor
 
 	if($cmderr) {
-		Write-Error "Failed to execute command batch $commandBatchPath: $cmderr"
+		Write-Error "Failed to execute command batch ${commandBatchPath}: $cmderr"
 		$outputfile = $commandBatchPath -replace "\.xml$","_output.xml"
 		$ErrorReport = $commandBatchPath -replace "\.xml$","_errors.csv"
 		if( Test-Path $outputfile ) {
