@@ -40,7 +40,7 @@ param(
 	[parameter(mandatory=$true, parametersetname="Excel")]
 	[String[]] $sheetName,
 	[parameter(mandatory=$true, parametersetname="CSV", valuefrompipeline=$true)]
-	[String[]] $csvFiles,
+	$csvFiles,
 	[parameter(mandatory=$false)]
 	[scriptblock] $rowFilter = $null,
 	[parameter(mandatory=$false)]
@@ -83,6 +83,7 @@ if( $excelFile ) {
 		exit 1
 	}
 }
+
 $swtotal = [System.Diagnostics.Stopwatch]::StartNew()
 $commandBatches = $csvFiles | %{
 	$commandBatchPath = $_.Path -replace "\.csv$","_CommandBatch.xml"
