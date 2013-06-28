@@ -132,10 +132,13 @@ function getParameterValueForColumn( $columnName, $value ) {
 			}
 
 			$line = $v.Trim() -replace '&', '&amp;'
-			$lookupTable.GetEnumerator() | %{
-				if ($line -match $_.Key)
-				{
-					$line = $line -replace $_.Key, $_.Value
+			if( $line -ne """""" ) # intends empty string
+			{
+				$lookupTable.GetEnumerator() | %{
+					if ($line -match $_.Key)
+					{
+						$line = $line -replace $_.Key, $_.Value
+					}
 				}
 			}
 			$line
