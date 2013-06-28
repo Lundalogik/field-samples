@@ -120,7 +120,28 @@ function getParameterValueForColumn( $columnName, $value ) {
 		if( $columnValuePrefix.ContainsKey( $columnName ) ) {
 			[string]::Concat( $columnValuePrefix[$columnName], $v ).Trim()
 		} else {
-			$v.Trim() -replace "&","&amp;"
+
+			$lookupTable = @{
+				'<' = '&lt;' 
+				'>' = '&gt;' 
+				'`r' = ' ' 
+				'`n' = ' ' 
+				'`t' = ' ' 
+				'"' = '&quot;'
+				'''' = '&apos;'
+			}
+
+			$line = $v.Trim() -replace '&', '&amp;'
+			if( $line -ne """""" ) # intends empty string
+			{
+				$lookupTable.GetEnumerator() | %{
+					if ($line -match $_.Key)
+					{
+						$line = $line -replace $_.Key, $_.Value
+					}
+				}
+			}
+			$line
 		}
 	}
 }
