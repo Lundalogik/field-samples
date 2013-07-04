@@ -30,13 +30,17 @@ namespace CommandsClient
 
             // The case "cases/130610-0027", resource "resources/130225-0011" and workorder reference "workorders/130610-0027-1" 
             // are just example href based on the command xml files.
+
+            // Based on UpdateWorkOrderStatus.xml
             var workOrderStatus = Commands.UpsertWorkOrder("workorders/130610-0027-1")
                                                 .Parameter("State", "NotStarted"); // NotStarted/Started/Finished
-          
+
+            // Based on UpdateWorkOrderTitle.xml
             var workOrderTitleAndDescription = Commands.UpsertWorkOrder("workorders/130610-0027-1")
                     .Parameter("Title", "New title")
                     .Parameter("Description", "Updated using commands sample");
 
+            // Based on CreateUsageQuantity.xml
             var addUsageQuantity = Commands.CreateUsageQuantity("cases/130610-0027", "resources/130225-0011",
                                                                 new Dictionary<string, string>
                                                                     {

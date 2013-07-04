@@ -65,8 +65,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Examples\CreateusageQuantity.xml" />
-    <Content Include="Examples\UpdateWorkOrderStatus.xml" />
+    <Content Include="Examples\CreateUsageQuantity.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Examples\UpdateWorkOrderStatus.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Examples\UpdateWorkorderTitle.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
