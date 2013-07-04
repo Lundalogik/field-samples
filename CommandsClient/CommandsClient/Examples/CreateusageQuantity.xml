@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Create usagequantity on workorder demo</Id>
+  <Command>
+    <Name>CreateUsageQuantity</Name>
+    <Parameter>
+      <Name>Case</Name>
+      <Value>130610-0027</Value>
+    </Parameter>
+    <Parameter>
+      <Name>WorkOrder</Name>
+      <Value>130610-0027-1</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Activity</Name>
+      <Value>System.Picklist.UsageQuantity.Activity.Felsökning</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Description</Name>
+      <Value>Demo lägga till text</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Resource</Name>
+      <Value>130225-0011</Value>
+    </Parameter>
+  </Command>
+</CommandBatch>
