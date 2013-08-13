@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>Update work order to started demo</Id>
+  <Command>
+    <Name>UpdateWorkOrder</Name>
+    <Target>workorders/130610-0027-1</Target>
+    <Parameter>
+      <Name>Title</Name>
+      <Value>New title</Value>
+    </Parameter>
+    <Parameter>
+      <Name>Description</Name>
+      <Value>Case created using commands sample</Value>
+    </Parameter>
+    <State>Started</State>
+  </Command>
+</CommandBatch>
