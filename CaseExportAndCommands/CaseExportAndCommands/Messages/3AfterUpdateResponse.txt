@@ -1,0 +1,59 @@
+﻿HTTP/1.1 200 OK
+Content-Length: 1284
+Content-Type: application/xml
+Server: Microsoft-IIS/7.5
+APIStatusMessage: OK
+Server: RemoteX-Applications/5.3.4374.3
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,PUT,POST,OPTIONS
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: origin, content-type, accept, if-match, authorization
+X-Powered-By: ASP.NET
+Date: Tue, 27 Aug 2013 12:29:57 GMT
+<?xml version="1.0" encoding="utf-8"?>
+<CommandBatchResponse xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.remotex.net/Apps/201207/Commands">
+  <Href>commands</Href>
+  <Id/>
+  <HasErrors>false</HasErrors>
+  <Received>2013-08-27T12:29:56.9889481Z</Received>
+  <CommandResponse>
+    <HasErrors>false</HasErrors>
+    <AffectedItems>
+      <Item>
+        <Href>cases/130412-0001</Href>
+        <Revision>3</Revision>
+      </Item>
+    </AffectedItems>
+    <Command>
+      <Name>UpdateCase</Name>
+      <Target>cases/130412-0001</Target>
+    </Command>
+  </CommandResponse>
+  <CommandResponse>
+    <HasErrors>false</HasErrors>
+    <AffectedItems>
+      <Item>
+        <Href>cases/130422-0008</Href>
+        <Revision>3</Revision>
+      </Item>
+    </AffectedItems>
+    <Command>
+      <Name>UpdateCase</Name>
+      <Target>cases/130422-0008</Target>
+    </Command>
+  </CommandResponse>
+  <CommandResponse>
+    <HasErrors>false</HasErrors>
+    <AffectedItems>
+      <Item>
+        <Href>cases/130422-0007</Href>
+        <Revision>3</Revision>
+      </Item>
+    </AffectedItems>
+    <Command>
+      <Name>UpdateCase</Name>
+      <Target>cases/130422-0007</Target>
+    </Command>
+  </CommandResponse>
+  <ContinueOnError>true</ContinueOnError>
+</CommandBatchResponse>

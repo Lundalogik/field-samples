@@ -1,0 +1,52 @@
+﻿POST http://manual.testing.remotex.net/api/commands HTTP/1.1
+Accept: application/xml
+Content-Type: application/xml
+Authorization: Basic am9oYW46Sm9oYW4=
+Host: manual.testing.remotex.net
+Content-Length: 1725
+Expect: 100-continue
+
+<?xml version="1.0" encoding="utf-8"?>
+<CommandBatch xmlns="http://schemas.remotex.net/Apps/201207/Commands" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id/>
+  <ContinueOnError>true</ContinueOnError>
+  <Command>
+    <Name>UpdateCase</Name>
+    <Target>cases/130412-0001</Target>
+      <Parameter>
+        <Name>ExternalNote</Name>
+        <Value>Error</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ExternalComment</Name>
+        <Value>Zipcode error</Value>
+      </Parameter>
+  </Command>
+  <Command>
+    <Name>UpdateCase</Name>
+    <Target>cases/130422-0008</Target>
+      <Parameter>
+        <Name>CrmSystemId</Name>
+        <Value>635132026483426715</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ExternalNote</Name>
+        <Value>OK</Value>
+      </Parameter>
+  </Command>
+  <Command>
+    <Name>UpdateCase</Name>
+    <Target>cases/130422-0007</Target>
+      <Parameter>
+        <Name>CrmSystemId</Name>
+        <Value>635132026483426715</Value>
+      </Parameter>
+      <Parameter>
+        <Name>ExternalNote</Name>
+        <Value>OK</Value>
+      </Parameter>
+  </Command>
+</CommandBatch>
+
+
+

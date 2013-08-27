@@ -1,0 +1,1103 @@
+﻿Date: Tue, 27 Aug 2013 11:06:58 GMT
+Content-Encoding: gzip
+Server: Microsoft-IIS/7.5
+APIStatusMessage: OK
+X-Powered-By: ASP.NET, ARR/2.5, ASP.NET
+Vary: Accept-Encoding
+Access-Control-Allow-Methods: GET,PUT,POST,OPTIONS
+Content-Type: application/xml
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+X-ServedBy: RMXWEB03
+Access-Control-Allow-Headers: origin, content-type, accept, if-match, authorization
+Content-Length: 3606
+<?xml version="1.0" encoding="utf-8"?>
+<CaseExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.remotex.net/Apps/201206/CaseExport">
+  <Query>
+    <UsageQuantityStatuses>
+      <string>NotEditable</string>
+    </UsageQuantityStatuses>
+    <WorkOrderFinishedBefore>
+      <Value>0d</Value>
+      <TimeSpan/>
+    </WorkOrderFinishedBefore>
+    <ExcludedUQActivities>
+      <string>System.Picklist.UsageQuantity.Activity.NotIntegrated</string>
+    </ExcludedUQActivities>
+    <ExcludedCaseTypes>
+      <string>System.Picklist.Case.Type.TimeReporting</string>
+      <string>System.Picklist.Case.Type.NotIntegrated</string>
+    </ExcludedCaseTypes>
+    <IncludedCaseTypes/>
+    <ExcludedCasePriorities/>
+    <IncludedCasePriorities/>
+    <IncludedCaseIdPrefix/>
+    <MustHaveUQActivity>false</MustHaveUQActivity>
+    <MustHaveContract>true</MustHaveContract>
+    <MustHaveUnit>true</MustHaveUnit>
+    <WorkOrderMustBeFinished>true</WorkOrderMustBeFinished>
+    <MustNotHaveCrmSystemId>false</MustNotHaveCrmSystemId>
+    <MustNotHaveFinancialSystemId>false</MustNotHaveFinancialSystemId>
+    <MustHaveCaseTags/>
+    <MustNotHaveEditableUq>false</MustNotHaveEditableUq>
+    <MaxCaseCount>500</MaxCaseCount>
+  </Query>
+  <Case xmlns:p4="http://www.w3.org/1999/xlink" p4:href="cases/130412-0001" revision="1">
+    <Id>130412-0001</Id>
+    <CRMSystemId/>
+    <FinancialSystemId/>
+    <Title>Reparation reningsverk</Title>
+    <Description>Sprutar lut på väggen</Description>
+    <Note>Uffe</Note>
+    <Summary p4:href="cases/130412-0001/summary" revision="6">
+      <TotalCost>350.00000000</TotalCost>
+      <TotalCostEditable>0.00000000</TotalCostEditable>
+      <TotalPrice>695.000000</TotalPrice>
+      <TotalPriceEditable>0.000000</TotalPriceEditable>
+      <TotalHours>0.0000</TotalHours>
+      <EditableUQs>0</EditableUQs>
+      <NotEditableUQs>1</NotEditableUQs>
+      <LockedUQs>0</LockedUQs>
+      <State>Finished</State>
+      <Status>Active</Status>
+      <Started>2013-04-12T08:48:37.093</Started>
+      <Finished>2013-04-12T08:50:07.37</Finished>
+    </Summary>
+    <Type>System.Picklist.Case.Type.Service</Type>
+    <Priority>System.Picklist.Case.Priority.Priority1</Priority>
+    <Traits/>
+    <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention/>
+      <Street/>
+      <Street2/>
+      <StreetNumber/>
+      <Entrance/>
+      <Floor/>
+      <Zip/>
+      <City/>
+      <State/>
+      <Country/>
+    </Address>
+    <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention>Test AB</Attention>
+      <Street>Testvägen</Street>
+      <Street2/>
+      <StreetNumber>23</StreetNumber>
+      <Entrance/>
+      <Floor/>
+      <Zip></Zip>
+      <City>Huddinge</City>
+      <State>Stockholm</State>
+      <Country>Sverige</Country>
+    </BillingAddress>
+    <Hierarchy p4:href="hierarchies/13042200001" revision="1">
+      <Id>13042200001</Id>
+      <Title>Test</Title>
+      <Status>Active</Status>
+      <Description/>
+      <Tags p4:href="hierarchies/13042200001/tags"/>
+      <Node>
+        <Unit p4:href="units/13042200004" revision="2">
+          <Id>13042200004</Id>
+          <Title>Test</Title>
+          <Code/>
+          <Status>Active</Status>
+          <Description/>
+          <Note/>
+          <Comment/>
+          <Type/>
+          <Group/>
+          <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+          <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+            <Attention/>
+            <Street/>
+            <Street2/>
+            <StreetNumber/>
+            <Entrance/>
+            <Floor/>
+            <Zip/>
+            <City/>
+            <State/>
+            <Country/>
+          </Address>
+          <Individuals/>
+          <CRMSystemId/>
+          <UnitSystemId/>
+          <ExternalNote/>
+          <ExternalComment/>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13042200004/tags" revision="3">
+            <Created>2013-04-22T11:39:05.383Z</Created>
+            <Updated>2013-04-22T11:41:21.823Z</Updated>
+          </Tags>
+          <Created>2013-04-22T11:39:04.277Z</Created>
+          <Updated>2013-04-22T11:41:21.493Z</Updated>
+          <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+          <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        </Unit>
+        <Nodes>
+          <Node>
+            <Unit p4:href="units/13041200001" revision="3">
+              <Id>13041200001</Id>
+              <Title>Test</Title>
+              <Code>M050</Code>
+              <Status>Active</Status>
+              <Description>Reningsverk Test</Description>
+              <Note/>
+              <Comment/>
+              <Type/>
+              <Group/>
+              <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+              <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+              <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+                <Attention>Test AB</Attention>
+                <Street>Testvägen</Street>
+                <Street2/>
+                <StreetNumber>23</StreetNumber>
+                <Entrance/>
+                <Floor/>
+                <Zip>14145</Zip>
+                <City>Huddinge</City>
+                <State>Stockholms Län</State>
+                <Country>Sverige</Country>
+              </Address>
+              <Individuals/>
+              <CRMSystemId/>
+              <UnitSystemId/>
+              <ExternalNote/>
+              <ExternalComment/>
+              <Traits/>
+              <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+                <Created>2013-04-12T08:27:58.39Z</Created>
+                <Updated>2013-04-22T11:41:22.65Z</Updated>
+              </Tags>
+              <Created>2013-04-12T08:27:57.86Z</Created>
+              <Updated>2013-04-22T11:41:22.367Z</Updated>
+              <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+              <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+            </Unit>
+          </Node>
+        </Nodes>
+      </Node>
+      <Created>2013-04-22T11:41:18.857Z</Created>
+      <Updated>2013-04-22T11:41:18.857Z</Updated>
+      <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Hierarchy>
+    <Created>2013-04-12T08:35:56Z</Created>
+    <Updated>2013-04-12T08:35:56Z</Updated>
+    <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+    <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+    <Contract p4:href="contracts/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test AB</Title>
+      <Type/>
+      <Group/>
+      <Status>Active</Status>
+      <Description/>
+      <Note/>
+      <Individuals>
+        <Link p4:href="individuals/13042200001" p4:title="Evert Testsson"/>
+      </Individuals>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="contracts/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:20:29.857Z</Created>
+        <Updated>2013-04-22T12:58:14.563Z</Updated>
+      </Tags>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </Address>
+      <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </BillingAddress>
+    </Contract>
+    <Unit p4:href="units/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test</Title>
+      <Code>M050</Code>
+      <Status>Active</Status>
+      <Description>Reningsverk Test</Description>
+      <Note/>
+      <Comment/>
+      <Type/>
+      <Group/>
+      <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+      <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholms Län</State>
+        <Country>Sverige</Country>
+      </Address>
+      <Individuals/>
+      <CRMSystemId/>
+      <UnitSystemId/>
+      <ExternalNote/>
+      <ExternalComment/>
+      <Traits/>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:27:58.39Z</Created>
+        <Updated>2013-04-22T11:41:22.65Z</Updated>
+      </Tags>
+      <Created>2013-04-12T08:27:57.86Z</Created>
+      <Updated>2013-04-22T11:41:22.367Z</Updated>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Unit>
+    <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="cases/130412-0001/tags" revision="2">
+      <Tag Name="EmailNotification" Response=""/>
+      <Tag Name="SMSNotification" Response=""/>
+      <Created>2013-04-12T08:35:59.76Z</Created>
+      <Updated>2013-04-12T08:35:59.76Z</Updated>
+    </Tags>
+    <Individuals/>
+    <WorkOrders>
+      <WorkOrder p4:href="workorders/130412-0001-1" revision="3">
+        <Id>130412-0001-1</Id>
+        <Title>Reparation reningsverk</Title>
+        <Description>Sprutar lut på väggen</Description>
+        <State>Finished</State>
+        <Status>Active</Status>
+        <Resource p4:href="resources/130412-0002" revision="1">
+          <Id>130412-0002</Id>
+          <DisplayName>Evert Testsson</DisplayName>
+          <PhoneNumber>070123456</PhoneNumber>
+          <Email>test@example.com</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0002/tags" revision="2">
+            <Created>2013-04-12T08:12:10.78Z</Created>
+            <Updated>2013-04-12T08:12:10.78Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:12:09.843Z</Created>
+          <Updated>2013-04-12T08:12:09.843Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <Activity/>
+        <Traits/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="workorders/130412-0001-1/tags" revision="1">
+          <Created>2013-08-27T11:00:29.4914653Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <Started>2013-04-12T08:48:37.093Z</Started>
+        <Finished>2013-04-12T08:50:07.37Z</Finished>
+        <Created>2013-04-12T08:36:01.473Z</Created>
+        <Updated>2013-04-12T08:50:07.45Z</Updated>
+        <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+        <UpdatedBy p4:href="users/evert" p4:title="Evert Testsson"/>
+      </WorkOrder>
+    </WorkOrders>
+    <UsageQuantities>
+      <UsageQuantity p4:href="usagequantities/13041200001" revision="2">
+        <Id>13041200001</Id>
+        <Resource p4:href="resources/130412-0002" revision="1">
+          <Id>130412-0002</Id>
+          <DisplayName>Evert Testsson</DisplayName>
+          <PhoneNumber>070123456</PhoneNumber>
+          <Email>test@example.com</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0002/tags" revision="2">
+            <Created>2013-04-12T08:12:10.78Z</Created>
+            <Updated>2013-04-12T08:12:10.78Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:12:09.843Z</Created>
+          <Updated>2013-04-12T08:12:09.843Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <WorkOrder p4:href="workorders/130412-0001-1" p4:title="Reparation reningsverk"/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="usagequantities/13041200001/tags" revision="1">
+          <Created>2013-08-27T11:00:28.4618635Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <RegistrationDate>2013-04-12T00:00:00Z</RegistrationDate>
+        <Code>1001</Code>
+        <VerificationNumber/>
+        <Title>Zon 1</Title>
+        <Description>Test besskrivning</Description>
+        <ManufacturerCode/>
+        <Quantity>1.0000</Quantity>
+        <Metric>st</Metric>
+        <PricePerPiece>695.0000</PricePerPiece>
+        <CostPerPiece>350.0000</CostPerPiece>
+        <Product p4:href="products/13041200001" p4:title="Zon 1"/>
+        <Status>NotEditable</Status>
+        <Type>Travel</Type>
+        <Activity>System.Picklist.UsageQuantity.Activity.Transport</Activity>
+        <CustomerComment/>
+        <Created>2013-04-12T08:48:36.203Z</Created>
+        <Updated>2013-04-12T09:01:53.21Z</Updated>
+        <CreatedBy p4:href="users/evert" p4:title="Evert Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <TotalPrice>695.00000000</TotalPrice>
+      </UsageQuantity>
+    </UsageQuantities>
+  </Case>
+  <Case xmlns:p4="http://www.w3.org/1999/xlink" p4:href="cases/130422-0008" revision="1">
+    <Id>130422-0008</Id>
+    <CRMSystemId/>
+    <FinancialSystemId/>
+    <Title>Testar lite</Title>
+    <Description>Prova att fylla i grejer</Description>
+    <Note/>
+    <Summary p4:href="cases/130422-0008/summary" revision="8">
+      <TotalCost>1750.00000000</TotalCost>
+      <TotalCostEditable>0.00000000</TotalCostEditable>
+      <TotalPrice>3400.000000</TotalPrice>
+      <TotalPriceEditable>0.000000</TotalPriceEditable>
+      <TotalHours>5.0000</TotalHours>
+      <EditableUQs>0</EditableUQs>
+      <NotEditableUQs>2</NotEditableUQs>
+      <LockedUQs>0</LockedUQs>
+      <State>Finished</State>
+      <Status>Active</Status>
+      <Started>2013-04-22T08:58:19.2</Started>
+      <Finished>2013-04-22T09:04:40.42</Finished>
+    </Summary>
+    <Type>System.Picklist.Case.Type.Service</Type>
+    <Priority>System.Picklist.Case.Priority.Priority1</Priority>
+    <Traits/>
+    <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention/>
+      <Street/>
+      <Street2/>
+      <StreetNumber/>
+      <Entrance/>
+      <Floor/>
+      <Zip/>
+      <City/>
+      <State/>
+      <Country/>
+    </Address>
+    <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention>Test AB</Attention>
+      <Street>Testvägen</Street>
+      <Street2/>
+      <StreetNumber>23</StreetNumber>
+      <Entrance/>
+      <Floor/>
+      <Zip>14145</Zip>
+      <City>Huddinge</City>
+      <State>Stockholm</State>
+      <Country>Sverige</Country>
+    </BillingAddress>
+    <Hierarchy p4:href="hierarchies/13042200001" revision="1">
+      <Id>13042200001</Id>
+      <Title>Test</Title>
+      <Status>Active</Status>
+      <Description/>
+      <Tags p4:href="hierarchies/13042200001/tags"/>
+      <Node>
+        <Unit p4:href="units/13042200004" revision="2">
+          <Id>13042200004</Id>
+          <Title>Test</Title>
+          <Code/>
+          <Status>Active</Status>
+          <Description/>
+          <Note/>
+          <Comment/>
+          <Type/>
+          <Group/>
+          <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+          <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+            <Attention/>
+            <Street/>
+            <Street2/>
+            <StreetNumber/>
+            <Entrance/>
+            <Floor/>
+            <Zip/>
+            <City/>
+            <State/>
+            <Country/>
+          </Address>
+          <Individuals/>
+          <CRMSystemId/>
+          <UnitSystemId/>
+          <ExternalNote/>
+          <ExternalComment/>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13042200004/tags" revision="3">
+            <Created>2013-04-22T11:39:05.383Z</Created>
+            <Updated>2013-04-22T11:41:21.823Z</Updated>
+          </Tags>
+          <Created>2013-04-22T11:39:04.277Z</Created>
+          <Updated>2013-04-22T11:41:21.493Z</Updated>
+          <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+          <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        </Unit>
+        <Nodes>
+          <Node>
+            <Unit p4:href="units/13041200001" revision="3">
+              <Id>13041200001</Id>
+              <Title>Test</Title>
+              <Code>M050</Code>
+              <Status>Active</Status>
+              <Description>Reningsverk Test</Description>
+              <Note/>
+              <Comment/>
+              <Type/>
+              <Group/>
+              <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+              <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+              <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+                <Attention>Test AB</Attention>
+                <Street>Testvägen</Street>
+                <Street2/>
+                <StreetNumber>23</StreetNumber>
+                <Entrance/>
+                <Floor/>
+                <Zip>14145</Zip>
+                <City>Huddinge</City>
+                <State>Stockholms Län</State>
+                <Country>Sverige</Country>
+              </Address>
+              <Individuals/>
+              <CRMSystemId/>
+              <UnitSystemId/>
+              <ExternalNote/>
+              <ExternalComment/>
+              <Traits/>
+              <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+                <Created>2013-04-12T08:27:58.39Z</Created>
+                <Updated>2013-04-22T11:41:22.65Z</Updated>
+              </Tags>
+              <Created>2013-04-12T08:27:57.86Z</Created>
+              <Updated>2013-04-22T11:41:22.367Z</Updated>
+              <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+              <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+            </Unit>
+          </Node>
+        </Nodes>
+      </Node>
+      <Created>2013-04-22T11:41:18.857Z</Created>
+      <Updated>2013-04-22T11:41:18.857Z</Updated>
+      <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Hierarchy>
+    <Created>2013-04-22T08:57:56.58Z</Created>
+    <Updated>2013-04-22T08:57:56.58Z</Updated>
+    <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    <Contract p4:href="contracts/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test AB</Title>
+      <Type/>
+      <Group/>
+      <Status>Active</Status>
+      <Description/>
+      <Note/>
+      <Individuals>
+        <Link p4:href="individuals/13042200001" p4:title="Evert Testsson"/>
+      </Individuals>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="contracts/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:20:29.857Z</Created>
+        <Updated>2013-04-22T12:58:14.563Z</Updated>
+      </Tags>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </Address>
+      <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </BillingAddress>
+    </Contract>
+    <Unit p4:href="units/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test</Title>
+      <Code>M050</Code>
+      <Status>Active</Status>
+      <Description>Reningsverk Test</Description>
+      <Note/>
+      <Comment/>
+      <Type/>
+      <Group/>
+      <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+      <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholms Län</State>
+        <Country>Sverige</Country>
+      </Address>
+      <Individuals/>
+      <CRMSystemId/>
+      <UnitSystemId/>
+      <ExternalNote/>
+      <ExternalComment/>
+      <Traits/>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:27:58.39Z</Created>
+        <Updated>2013-04-22T11:41:22.65Z</Updated>
+      </Tags>
+      <Created>2013-04-12T08:27:57.86Z</Created>
+      <Updated>2013-04-22T11:41:22.367Z</Updated>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Unit>
+    <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="cases/130422-0008/tags" revision="2">
+      <Tag Name="EmailNotification" Response=""/>
+      <Tag Name="SMSNotification" Response=""/>
+      <Created>2013-04-22T08:57:57.673Z</Created>
+      <Updated>2013-04-22T08:57:57.673Z</Updated>
+    </Tags>
+    <Individuals/>
+    <WorkOrders>
+      <WorkOrder p4:href="workorders/130422-0008-1" revision="3">
+        <Id>130422-0008-1</Id>
+        <Title>Testar lite</Title>
+        <Description>Prova att fylla i grejer</Description>
+        <State>Finished</State>
+        <Status>Active</Status>
+        <Resource p4:href="resources/130412-0001" revision="1">
+          <Id>130412-0001</Id>
+          <DisplayName>Test Testsson</DisplayName>
+          <PhoneNumber>070-5686254</PhoneNumber>
+          <Email>mattias.olsson@constantclean.se</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0001/tags" revision="2">
+            <Created>2013-04-12T08:07:03.99Z</Created>
+            <Updated>2013-04-12T08:07:03.99Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:07:03.35Z</Created>
+          <Updated>2013-04-12T08:07:03.35Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <Activity/>
+        <Traits/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="workorders/130422-0008-1/tags" revision="1">
+          <Created>2013-08-27T11:00:29.5226654Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <Started>2013-04-22T08:58:19.2Z</Started>
+        <Finished>2013-04-22T09:04:40.42Z</Finished>
+        <Created>2013-04-22T08:57:57.297Z</Created>
+        <Updated>2013-04-22T09:04:40.497Z</Updated>
+        <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      </WorkOrder>
+    </WorkOrders>
+    <UsageQuantities>
+      <UsageQuantity p4:href="usagequantities/13042200016" revision="2">
+        <Id>13042200016</Id>
+        <Resource p4:href="resources/130412-0001" revision="1">
+          <Id>130412-0001</Id>
+          <DisplayName>Test Testsson</DisplayName>
+          <PhoneNumber>070-5686254</PhoneNumber>
+          <Email>mattias.olsson@constantclean.se</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0001/tags" revision="2">
+            <Created>2013-04-12T08:07:03.99Z</Created>
+            <Updated>2013-04-12T08:07:03.99Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:07:03.35Z</Created>
+          <Updated>2013-04-12T08:07:03.35Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <WorkOrder p4:href="workorders/130422-0008-1" p4:title="Testar lite"/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="usagequantities/13042200016/tags" revision="1">
+          <Created>2013-08-27T11:00:28.5086636Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <RegistrationDate>2013-04-22T00:00:00Z</RegistrationDate>
+        <Code>1001</Code>
+        <VerificationNumber/>
+        <Title>Arbetstid</Title>
+        <Description>Arbetstid Normal</Description>
+        <ManufacturerCode/>
+        <Quantity>2.0000</Quantity>
+        <Metric/>
+        <PricePerPiece>680.0000</PricePerPiece>
+        <CostPerPiece>350.0000</CostPerPiece>
+        <Product p4:href="products/13041400002" p4:title="Arbetstid"/>
+        <Status>NotEditable</Status>
+        <Type>Time</Type>
+        <Activity/>
+        <CustomerComment/>
+        <Created>2013-04-22T09:00:15.937Z</Created>
+        <Updated>2013-04-22T09:12:48.217Z</Updated>
+        <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <TotalPrice>1360.00000000</TotalPrice>
+      </UsageQuantity>
+      <UsageQuantity p4:href="usagequantities/13042200020" revision="2">
+        <Id>13042200020</Id>
+        <Resource p4:href="resources/130412-0001" revision="1">
+          <Id>130412-0001</Id>
+          <DisplayName>Test Testsson</DisplayName>
+          <PhoneNumber>070-5686254</PhoneNumber>
+          <Email>mattias.olsson@constantclean.se</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0001/tags" revision="2">
+            <Created>2013-04-12T08:07:03.99Z</Created>
+            <Updated>2013-04-12T08:07:03.99Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:07:03.35Z</Created>
+          <Updated>2013-04-12T08:07:03.35Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <WorkOrder p4:href="workorders/130422-0008-1" p4:title="Testar lite"/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="usagequantities/13042200020/tags" revision="1">
+          <Created>2013-08-27T11:00:28.5398636Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <RegistrationDate>2013-04-22T00:00:00Z</RegistrationDate>
+        <Code>1001</Code>
+        <VerificationNumber/>
+        <Title>Arbetstid</Title>
+        <Description>Arbetstid Normal</Description>
+        <ManufacturerCode/>
+        <Quantity>3.0000</Quantity>
+        <Metric/>
+        <PricePerPiece>680.0000</PricePerPiece>
+        <CostPerPiece>350.0000</CostPerPiece>
+        <Product p4:href="products/13041400002" p4:title="Arbetstid"/>
+        <Status>NotEditable</Status>
+        <Type>Time</Type>
+        <Activity>System.Picklist.UsageQuantity.Activity.Service</Activity>
+        <CustomerComment/>
+        <Created>2013-04-22T09:04:39.887Z</Created>
+        <Updated>2013-04-22T09:12:48.263Z</Updated>
+        <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <TotalPrice>2040.00000000</TotalPrice>
+      </UsageQuantity>
+    </UsageQuantities>
+  </Case>
+  <Case xmlns:p4="http://www.w3.org/1999/xlink" p4:href="cases/130422-0007" revision="1">
+    <Id>130422-0007</Id>
+    <CRMSystemId/>
+    <FinancialSystemId/>
+    <Title>Test AB</Title>
+    <Description>Test beskrivning</Description>
+    <Note>U. Ramsay</Note>
+    <Summary p4:href="cases/130422-0007/summary" revision="13">
+      <TotalCost>2100.00000000</TotalCost>
+      <TotalCostEditable>0.00000000</TotalCostEditable>
+      <TotalPrice>4095.000000</TotalPrice>
+      <TotalPriceEditable>0.000000</TotalPriceEditable>
+      <TotalHours>5.0000</TotalHours>
+      <EditableUQs>0</EditableUQs>
+      <NotEditableUQs>3</NotEditableUQs>
+      <LockedUQs>0</LockedUQs>
+      <State>Finished</State>
+      <Status>Active</Status>
+      <Started>2013-04-22T08:52:51.507</Started>
+      <Finished>2013-04-22T09:04:39.25</Finished>
+    </Summary>
+    <Type>System.Picklist.Case.Type.Service</Type>
+    <Priority>System.Picklist.Case.Priority.Priority2</Priority>
+    <Traits/>
+    <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention>Test AB</Attention>
+      <Street>Testvägen</Street>
+      <Street2/>
+      <StreetNumber>23</StreetNumber>
+      <Entrance/>
+      <Floor/>
+      <Zip>14145</Zip>
+      <City>Huddinge</City>
+      <State>Stockholm</State>
+      <Country>Sverige</Country>
+    </Address>
+    <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+      <Attention>Test AB</Attention>
+      <Street>Testvägen</Street>
+      <Street2/>
+      <StreetNumber>23</StreetNumber>
+      <Entrance/>
+      <Floor/>
+      <Zip>14145</Zip>
+      <City>Huddinge</City>
+      <State>Stockholm</State>
+      <Country>Sverige</Country>
+    </BillingAddress>
+    <Hierarchy p4:href="hierarchies/13042200001" revision="1">
+      <Id>13042200001</Id>
+      <Title>Test</Title>
+      <Status>Active</Status>
+      <Description/>
+      <Tags p4:href="hierarchies/13042200001/tags"/>
+      <Node>
+        <Unit p4:href="units/13042200004" revision="2">
+          <Id>13042200004</Id>
+          <Title>Test</Title>
+          <Code/>
+          <Status>Active</Status>
+          <Description/>
+          <Note/>
+          <Comment/>
+          <Type/>
+          <Group/>
+          <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+          <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+            <Attention/>
+            <Street/>
+            <Street2/>
+            <StreetNumber/>
+            <Entrance/>
+            <Floor/>
+            <Zip/>
+            <City/>
+            <State/>
+            <Country/>
+          </Address>
+          <Individuals/>
+          <CRMSystemId/>
+          <UnitSystemId/>
+          <ExternalNote/>
+          <ExternalComment/>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13042200004/tags" revision="3">
+            <Created>2013-04-22T11:39:05.383Z</Created>
+            <Updated>2013-04-22T11:41:21.823Z</Updated>
+          </Tags>
+          <Created>2013-04-22T11:39:04.277Z</Created>
+          <Updated>2013-04-22T11:41:21.493Z</Updated>
+          <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+          <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        </Unit>
+        <Nodes>
+          <Node>
+            <Unit p4:href="units/13041200001" revision="3">
+              <Id>13041200001</Id>
+              <Title>Test</Title>
+              <Code>M050</Code>
+              <Status>Active</Status>
+              <Description>Reningsverk Test</Description>
+              <Note/>
+              <Comment/>
+              <Type/>
+              <Group/>
+              <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+              <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+              <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+                <Attention>Test AB</Attention>
+                <Street>Testvägen</Street>
+                <Street2/>
+                <StreetNumber>23</StreetNumber>
+                <Entrance/>
+                <Floor/>
+                <Zip>14145</Zip>
+                <City>Huddinge</City>
+                <State>Stockholms Län</State>
+                <Country>Sverige</Country>
+              </Address>
+              <Individuals/>
+              <CRMSystemId/>
+              <UnitSystemId/>
+              <ExternalNote/>
+              <ExternalComment/>
+              <Traits/>
+              <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+                <Created>2013-04-12T08:27:58.39Z</Created>
+                <Updated>2013-04-22T11:41:22.65Z</Updated>
+              </Tags>
+              <Created>2013-04-12T08:27:57.86Z</Created>
+              <Updated>2013-04-22T11:41:22.367Z</Updated>
+              <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+              <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+            </Unit>
+          </Node>
+        </Nodes>
+      </Node>
+      <Created>2013-04-22T11:41:18.857Z</Created>
+      <Updated>2013-04-22T11:41:18.857Z</Updated>
+      <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Hierarchy>
+    <Created>2013-04-22T08:47:51.41Z</Created>
+    <Updated>2013-04-22T08:47:51.41Z</Updated>
+    <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    <Contract p4:href="contracts/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test AB</Title>
+      <Type/>
+      <Group/>
+      <Status>Active</Status>
+      <Description/>
+      <Note/>
+      <Individuals>
+        <Link p4:href="individuals/13042200001" p4:title="Evert Testsson"/>
+      </Individuals>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="contracts/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:20:29.857Z</Created>
+        <Updated>2013-04-22T12:58:14.563Z</Updated>
+      </Tags>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </Address>
+      <BillingAddress xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholm</State>
+        <Country>Sverige</Country>
+      </BillingAddress>
+    </Contract>
+    <Unit p4:href="units/13041200001" revision="3">
+      <Id>13041200001</Id>
+      <Title>Test</Title>
+      <Code>M050</Code>
+      <Status>Active</Status>
+      <Description>Reningsverk Test</Description>
+      <Note/>
+      <Comment/>
+      <Type/>
+      <Group/>
+      <Contract p4:href="contracts/13041200001" p4:title="Test AB"/>
+      <Hierarchy p4:href="hierarchies/13042200001" p4:title="Test"/>
+      <Address xmlns="http://schemas.remotex.net/Apps/20090225/Entities">
+        <Attention>Test AB</Attention>
+        <Street>Testvägen</Street>
+        <Street2/>
+        <StreetNumber>23</StreetNumber>
+        <Entrance/>
+        <Floor/>
+        <Zip>14145</Zip>
+        <City>Huddinge</City>
+        <State>Stockholms Län</State>
+        <Country>Sverige</Country>
+      </Address>
+      <Individuals/>
+      <CRMSystemId/>
+      <UnitSystemId/>
+      <ExternalNote/>
+      <ExternalComment/>
+      <Traits/>
+      <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="units/13041200001/tags" revision="4">
+        <Created>2013-04-12T08:27:58.39Z</Created>
+        <Updated>2013-04-22T11:41:22.65Z</Updated>
+      </Tags>
+      <Created>2013-04-12T08:27:57.86Z</Created>
+      <Updated>2013-04-22T11:41:22.367Z</Updated>
+      <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+      <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+    </Unit>
+    <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="cases/130422-0007/tags" revision="2">
+      <Tag Name="EmailNotification" Response=""/>
+      <Tag Name="SMSNotification" Response=""/>
+      <Created>2013-04-22T08:47:52.39Z</Created>
+      <Updated>2013-04-22T08:47:52.39Z</Updated>
+    </Tags>
+    <Individuals/>
+    <WorkOrders>
+      <WorkOrder p4:href="workorders/130422-0007-1" revision="4">
+        <Id>130422-0007-1</Id>
+        <Title>Test AB</Title>
+        <Description>Test beskrivning</Description>
+        <State>Finished</State>
+        <Status>Active</Status>
+        <Resource p4:href="resources/130412-0002" revision="1">
+          <Id>130412-0002</Id>
+          <DisplayName>Evert Testsson</DisplayName>
+          <PhoneNumber>070123456</PhoneNumber>
+          <Email>test@example.com</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0002/tags" revision="2">
+            <Created>2013-04-12T08:12:10.78Z</Created>
+            <Updated>2013-04-12T08:12:10.78Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:12:09.843Z</Created>
+          <Updated>2013-04-12T08:12:09.843Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <Activity/>
+        <Traits/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="workorders/130422-0007-1/tags" revision="1">
+          <Created>2013-08-27T11:00:29.5382654Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <Started>2013-04-22T08:52:51.507Z</Started>
+        <Finished>2013-04-22T09:04:39.25Z</Finished>
+        <Created>2013-04-22T08:47:53.437Z</Created>
+        <Updated>2013-04-22T09:04:39.327Z</Updated>
+        <CreatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <UpdatedBy p4:href="users/evert" p4:title="Evert Testsson"/>
+      </WorkOrder>
+    </WorkOrders>
+    <UsageQuantities>
+      <UsageQuantity p4:href="usagequantities/13042200018" revision="2">
+        <Id>13042200018</Id>
+        <Resource p4:href="resources/130412-0002" revision="1">
+          <Id>130412-0002</Id>
+          <DisplayName>Evert Testsson</DisplayName>
+          <PhoneNumber>070123456</PhoneNumber>
+          <Email>test@example.com</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0002/tags" revision="2">
+            <Created>2013-04-12T08:12:10.78Z</Created>
+            <Updated>2013-04-12T08:12:10.78Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:12:09.843Z</Created>
+          <Updated>2013-04-12T08:12:09.843Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <WorkOrder p4:href="workorders/130422-0007-1" p4:title="Test AB"/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="usagequantities/13042200018/tags" revision="1">
+          <Created>2013-08-27T11:00:28.5554637Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <RegistrationDate>2013-04-22T00:00:00Z</RegistrationDate>
+        <Code>1001</Code>
+        <VerificationNumber/>
+        <Title>Arbetstid</Title>
+        <Description>Arbetstid Normal</Description>
+        <ManufacturerCode/>
+        <Quantity>3.0000</Quantity>
+        <Metric/>
+        <PricePerPiece>680.0000</PricePerPiece>
+        <CostPerPiece>350.0000</CostPerPiece>
+        <Product p4:href="products/13041400002" p4:title="Arbetstid"/>
+        <Status>NotEditable</Status>
+        <Type>Time</Type>
+        <Activity>System.Picklist.UsageQuantity.Activity.Downtime</Activity>
+        <CustomerComment/>
+        <Created>2013-04-22T09:04:37.44Z</Created>
+        <Updated>2013-04-22T13:40:27.197Z</Updated>
+        <CreatedBy p4:href="users/evert" p4:title="Evert Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <TotalPrice>2040.00000000</TotalPrice>
+      </UsageQuantity>
+      <UsageQuantity p4:href="usagequantities/13042200019" revision="2">
+        <Id>13042200019</Id>
+        <Resource p4:href="resources/130412-0002" revision="1">
+          <Id>130412-0002</Id>
+          <DisplayName>Evert Testsson</DisplayName>
+          <PhoneNumber>070123456</PhoneNumber>
+          <Email>test@example.com</Email>
+          <TimeLockHours>0</TimeLockHours>
+          <ProductGroups/>
+          <Status>Active</Status>
+          <Traits/>
+          <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="resources/130412-0002/tags" revision="2">
+            <Created>2013-04-12T08:12:10.78Z</Created>
+            <Updated>2013-04-12T08:12:10.78Z</Updated>
+          </Tags>
+          <Created>2013-04-12T08:12:09.843Z</Created>
+          <Updated>2013-04-12T08:12:09.843Z</Updated>
+          <CreatedBy p4:href="users/Admin" p4:title="Admin"/>
+          <UpdatedBy p4:href="users/Admin" p4:title="Admin"/>
+        </Resource>
+        <WorkOrder p4:href="workorders/130422-0007-1" p4:title="Test AB"/>
+        <Tags xmlns="http://schemas.remotex.net/Apps/20090225/Entities" p4:href="usagequantities/13042200019/tags" revision="1">
+          <Created>2013-08-27T11:00:28.5710637Z</Created>
+          <Updated>0001-01-01T00:00:00</Updated>
+        </Tags>
+        <RegistrationDate>2013-04-22T00:00:00Z</RegistrationDate>
+        <Code>1001</Code>
+        <VerificationNumber/>
+        <Title>Arbetstid</Title>
+        <Description>Arbetstid Normal</Description>
+        <ManufacturerCode/>
+        <Quantity>2.0000</Quantity>
+        <Metric/>
+        <PricePerPiece>680.0000</PricePerPiece>
+        <CostPerPiece>350.0000</CostPerPiece>
+        <Product p4:href="products/13041400002" p4:title="Arbetstid"/>
+        <Status>NotEditable</Status>
+        <Type>Time</Type>
+        <Activity>System.Picklist.UsageQuantity.Activity.Downtime</Activity>
+        <CustomerComment/>
+        <Created>2013-04-22T09:04:37.517Z</Created>
+        <Updated>2013-04-22T13:40:26.93Z</Updated>
+        <CreatedBy p4:href="users/evert" p4:title="Evert Testsson"/>
+        <UpdatedBy p4:href="users/test" p4:title="Test Testsson"/>
+        <TotalPrice>1360.00000000</TotalPrice>
+      </UsageQuantity>
+    </UsageQuantities>
+  </Case>
+</CaseExport>
