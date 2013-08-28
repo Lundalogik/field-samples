@@ -55,7 +55,7 @@ if( Test-path $traceFile ) {
 $url = "{0}/commands" -f $ServiceUri.TrimEnd("/")
 $cred = "{0}:{1}" -f $Username, $Password
 $sw = [System.Diagnostics.Stopwatch]::StartNew()
-curl -s -k --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
+curl -s --insecure --trace $traceFile -o $outputFile -u $cred -X POST -T $file.FullName -H 'Content-Type: application/xml' -H 'Accept: application/xml' $url
 if(!$? -or !(Test-Path $outputFile)) {
 	Write-Error ("Curl failed with error {0}" -f $LASTEXITCODE)
 	exit 5
