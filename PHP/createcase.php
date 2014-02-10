@@ -65,6 +65,7 @@ function postCommandBatch( $options, $commandBatch )
 function newIndividualAndCase()
 {
     $individualId = rand();
+    $caseId = rand();
     return buildBatch( 
         array(
             buildCommand('CreateIndividual', array(
@@ -95,6 +96,11 @@ function newIndividualAndCase()
                 buildParameter('StreetNumber', '42'),
                 buildParameter('Zip', 'S-12345'),
                 buildParameter('City', 'City'),
+                buildParameter('ExternalSystemId',$caseId)
+                )
+            ),
+            buildCommand('CreateWorkOrder', array(
+                buildParameter('Case',$caseId)
                 )
             )
         )
