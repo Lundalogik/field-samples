@@ -64,6 +64,7 @@ function postCommandBatch( $options, $commandBatch )
 
 function newIndividualAndCase()
 {
+    //We recommend using a more specific number than rand, chances are that the same number might be randomized twice. And that would be bad.
     $individualId = rand();
     $caseId = rand();
     return buildBatch( 
