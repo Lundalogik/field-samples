@@ -96,7 +96,7 @@ function newIndividualAndCase()
                 buildParameter('StreetNumber', '42'),
                 buildParameter('Zip', 'S-12345'),
                 buildParameter('City', 'City'),
-                buildParameter('ExternalSystemId',$caseId)
+                buildParameter('FinancialSystemId',$caseId)
                 )
             ),
             buildCommand('CreateWorkOrder', array(
