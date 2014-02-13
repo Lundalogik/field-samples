@@ -64,22 +64,24 @@ param(
 	[Switch] $continueOnError
 )
 
-if( $excelFile -and !(Get-Command -ErrorAction SilentlyContinue Convert-ExcelToCsv.ps1) ) {
-	Write-Error "Convert-ExcelToCsv.ps1 must be in the path"
+if( $excelFile -and !(Get-Command -ErrorAction SilentlyContinue .\Convert-ExcelToCsv.ps1) ) {
+	Write-Error "Couldnt find Convert-ExcelToCsv.ps1"
 	exit 1
 }
-if( !(Get-Command -ErrorAction SilentlyContinue Convert-CsvToCommandBatch.ps1) ) {
-	Write-Error "Convert-CsvToCommandBatch.ps1 must be in the path"
+if( !(Get-Command -ErrorAction SilentlyContinue .\Convert-CsvToCommandBatch.ps1) ) {
+	Write-Error "Couldnt find Convert-CsvToCommandBatch.ps1"
 	exit 1
 }
-if( !(Get-Command -ErrorAction SilentlyContinue Execute-Commands.ps1) ) {
-	Write-Error "Convert-CsvToCommandBatch.ps1 must be in the path"
+if( !(Get-Command -ErrorAction SilentlyContinue .\Execute-Commands.ps1) ) {
+	Write-Error "Couldnt find Convert-CsvToCommandBatch.ps1"
 	exit 1
 }
 
-Set-Alias excelToCsv (Get-Command Convert-ExcelToCsv.ps1)
-Set-Alias csvToCommandBatch (get-command Convert-CsvToCommandBatch.ps1)
-Set-Alias executeCommands (get-command Execute-Commands.ps1)
+	$ScriptDir = $MyInvocation.MyCommand.Path | split-path
+	
+Set-Alias excelToCsv $ScriptDir\Convert-ExcelToCsv.ps1
+Set-Alias csvToCommandBatch $ScriptDir\Convert-CsvToCommandBatch.ps1
+Set-Alias executeCommands $ScriptDir\Execute-Commands.ps1
 
 if( $excelFile ) {
 	$csvFiles = excelToCsv -excelFile $excelFile -filter $sheetName -noOutput:$false
