@@ -64,19 +64,6 @@ param(
 	[Switch] $continueOnError
 )
 
-if( $excelFile -and !(Get-Command -ErrorAction SilentlyContinue .\Convert-ExcelToCsv.ps1) ) {
-	Write-Error "Couldnt find Convert-ExcelToCsv.ps1"
-	exit 1
-}
-if( !(Get-Command -ErrorAction SilentlyContinue .\Convert-CsvToCommandBatch.ps1) ) {
-	Write-Error "Couldnt find Convert-CsvToCommandBatch.ps1"
-	exit 1
-}
-if( !(Get-Command -ErrorAction SilentlyContinue .\Execute-Commands.ps1) ) {
-	Write-Error "Couldnt find Convert-CsvToCommandBatch.ps1"
-	exit 1
-}
-
 	$ScriptDir = $MyInvocation.MyCommand.Path | split-path
 	
 Set-Alias excelToCsv $ScriptDir\Convert-ExcelToCsv.ps1
