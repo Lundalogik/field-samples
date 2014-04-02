@@ -28,8 +28,12 @@ param(
 )
 
 if( !( Get-Command curl ) ) {
-	Write-Error "Could not find curl command in the path"
-	exit 1
+	if( !(test-path ".\curl.exe") ) {
+		Write-Error "Could not find curl command in the path or in local folder"
+		exit 1
+	} else {
+		set-alias curl ".\curl.exe"
+	}
 }
 
 $file = gi -ErrorAction SilentlyContinue $Path
