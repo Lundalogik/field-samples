@@ -11,16 +11,16 @@ process {
 	$commandName = $_.CommandName
 	$functionName = $commandName -creplace "^([A-Z][^A-Z]*)([A-Z])",'$1-$2'
 	$count = ($_.Parameters.Parameter | measure).Count
-	$paramList = "`t[parameter(helpmessage='Enter the relative href of the target for the command')]`r`n`t[string] `$target,`r`n"
-	$helpParamList = ".PARAMETER target`r`n`tRelative href of the target for the command. Mandatory for most update commands."
+	$paramList = "`t[parameter(helpmessage='Enter the relative href of the target for the command')]`r`n`t[string] `$target"
+	$helpParamList = ".PARAMETER target`r`n`tRelative href of the target for the command. Mandatory for most update commands.`r`n"
 	$exampleParamList = ""
 	$settersList = ""
-	for( $i = 0; $i -lt $count; $i++ ) {
-		$p = $_.Parameters.Parameter[$i]
-		$varName = $p.ParameterName.Replace(".", "")
+	$i = 0
+	foreach( $p in $_.Parameters.Parameter ) {
+		$varName = $p.ParameterName -replace "[\.\s\-]", ""
 		$description = ($p.Description -replace "[\r\n]","")
 		$helpParamList += ".PARAMETER {0}`r`n`t{1}`r`n" -f $varName, $p.Description
-		$paramList += "`t[parameter(helpmessage='{0}')]`r`n`t[string[]] `${1}" -f $description, $varName
+		$paramList += ",`r`n`t[parameter(helpmessage=""{0}"")]`r`n`t[string[]] `${1}" -f $description, $varName
 		
 		if( $i -lt 5 ) {
 			$exampleParamList += "-{0} ""value{1}"" " -f $varName, $i
@@ -29,12 +29,9 @@ process {
 		if( $p.DefaultValue ) {
 			$paramList += " = '{0}'" -f $p.DefaultValue
 		} 
-		if( $i -lt ($count -1) ) {
-			$paramList += ","
-		}
-		$paramList += "`r`n"
 
 		$settersList += "if( `${1} ) {{ `$parameters.Add( ""{0}"", `${1} ) }}`r`n" -f $p.ParameterName, $varName
+		$i++
 	}
 @"
 <#

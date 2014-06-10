@@ -78,7 +78,7 @@ try {
 }
 
 Write-Host "Command batch execution took $($sw.Elapsed.Minutes)m $($sw.Elapsed.Seconds)s"
-
+$outputErrorsOnly = $false
 if($xml.HasErrors -ne "true") {
 	Write-Host "Successfully executed commands:"
 	$exitCode = 0
