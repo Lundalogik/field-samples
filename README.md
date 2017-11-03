@@ -1,4 +1,4 @@
 Samples
 =======
 
-Code samples related to RemoteX products
+Code samples related to [Lime Field](https://www.lime-field.se) products
