@@ -17,11 +17,25 @@ process {
   $headers = @{}
   $headers.Add( "x-api-key", $ApiKey)
   $headers.Add( "Accept", "application/hal+json")
-  $headers.Add( "Content-Type", "application/hal+json; charset=utf-8")
+  $headers.Add( "Content-Type", "application/json; charset=utf-8")
 
   function makeApiUrl {
-    param( $relativeUrl )
-    "{0}/api/v1/limeobject/{1}" -f $this.LimeCrmApplicactionUrl, $relativeUrl
+    param( $relativeOrAbsoluteUrl )
+
+    function trailingSlash {
+      param( $url )
+      if( -not $url.EndsWith("/") -and -not $url.Contains("?") ) {
+        "{0}/" -f $url
+      } else {
+        $url
+      }
+    }
+
+    if( $relativeOrAbsoluteUrl.StartsWith( $this.LimeCrmApplicactionUrl ) ) {
+      trailingSlash $relativeOrAbsoluteUrl
+    } else {
+      trailingSlash ("{0}/api/v1/limeobject/{1}" -f $this.LimeCrmApplicactionUrl, $relativeOrAbsoluteUrl)
+    }
   }
   function getJson {
     param( $url, [hashtable] $queryHashtable )
@@ -36,7 +50,6 @@ process {
       }
       $absoluteUrl += [string]::Join( "&", ($queryHashtable.Keys | %{ "{0}={1}" -f $_, $queryHashtable[$_] }) )
     }
-    Write-Host "GET $absoluteUrl"
     try{
     $json = $this.WebClient.DownloadString( $absoluteUrl )
     $json | ConvertFrom-Json `
@@ -103,12 +116,14 @@ process {
   addMember "delete"
   addMember "deleteJson"
 
-  Write-Host "Creating command aliases: get-json post-json"
-  Set-Alias get-json $PSScriptRoot\Get-Json.ps1
-  Set-Alias post-json $PSScriptRoot\Post-Json.ps1
-  Set-Alias set-currentapiclient $PSScriptRoot\Set-CurrentApiClient.ps1
+  $aliases = "get-json","post-json","put-json"
+  Write-Host "Creating command aliases: $aliases"
+  $aliases | %{
+    $scriptpath = join-path $PSScriptRoot "$($_).ps1"
+    Set-Alias -Name $_ -Value $scriptpath -Option AllScope
+  }
 
-  $apiClient | set-currentapiclient
+  $apiClient | & $PSScriptRoot\Set-CurrentApiClient.ps1
 
   $apiClient
 }
