@@ -1,4 +1,4 @@
-## How to upload and attach files from third party applications
+## How to upload and attach files from a third party applications
 
 The basic flow of uploading files looks like this:
 
@@ -16,7 +16,7 @@ First we will define some basic varables and helper functions to make the exampl
 
 Replace `USERNAME `, `PASSWORD` and `INSTALLATION_NAME` with valid values for your installation of Lime Field.
 
-The `entityHref ` should point out the entity to which we add attachments.
+The `entityHref` should point out the entity to which we add attachments.
 
 ```javascript
 const username = 'USERNAME';
@@ -50,6 +50,7 @@ function requestOptions(options = {}, headers = {}) {
 ```
 
 ### 1. Creating a `File` entity
+
 ```javascript
 async function createFileEntity(file) {
   const entity = {
@@ -70,6 +71,7 @@ async function createFileEntity(file) {
 ```
 
 ### 2. Uploading the file content
+
 ```javascript
 async function uploadFileContent(data) {
   return fetch(`${baseurl}/${data.entity.Content.Href}`, requestOptions({
@@ -104,7 +106,9 @@ async function addAttachmentsToEntity(attachments) {
 
 ### 4. Bootstraping the code to a view
 
-Bind `openFilesManager` to an `onclick` event on some button on your web page.
+Bind `openFilesManager` to a `onclick` event on some button on your web page.
+
+__Note__, we do not await content upload requests. They can be executed in parallel.
 
 ```javascript
 function isFileToLarge(file) {
@@ -139,6 +143,7 @@ function openFilesManager() {
 ```
 
 ### Finally. The complete code example.
+
 <details>
  	<summary>View the code</summary>
 
