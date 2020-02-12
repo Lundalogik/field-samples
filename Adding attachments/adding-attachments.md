@@ -1,6 +1,6 @@
 ## How to upload and attach files from a third party applications
 
-The basic flow of uploading files looks like this:
+The basic flow of uploading files in Lime Field looks like this:
 
 1. Create a `File` entity
 2. Upload file content to that entity's endpoint
@@ -104,7 +104,7 @@ async function addAttachmentsToEntity(attachments) {
 }
 ```
 
-### 4. Bootstraping the code to a view
+### Bootstraping the code to a view
 
 Bind `openFilesManager` to a `onclick` event on some button on your web page.
 
@@ -147,7 +147,7 @@ function openFilesManager() {
 <details>
  	<summary>View the code</summary>
 
-	```javascript
+	```
 	const username = 'kontra';
 	const password = 'P0pkorni';
 	const credentials = window.btoa(`${username}:${password}`);
