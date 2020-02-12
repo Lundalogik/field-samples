@@ -147,7 +147,7 @@ function openFilesManager() {
 <details>
  	<summary>View the code</summary>
 
-	```
+	```javascript
 	const username = 'kontra';
 	const password = 'P0pkorni';
 	const credentials = window.btoa(`${username}:${password}`);
