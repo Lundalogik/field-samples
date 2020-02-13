@@ -1,22 +1,22 @@
-## How to upload and attach files from a third party applications
+## How to upload and attach files from third party applications
 
 The basic flow of uploading files in Lime Field looks like this:
 
 1. Create a `File` entity
-2. Upload file content to that entity's endpoint
-3. Connect the file entity as attachment to another entity in the API, e.g. `Case`, `Unit`, `Contract`
+2. Upload the file's content
+3. Add the file entity as attachment to another entity, e.g. `Case`, `Unit`, `Contract`
 
-__Note__, you probably will need to ensure that CORS requests are allowed from the domain where your application is hosted. Contact __Lime Field__ about that.
+__Note__, you probably will need to ensure that CORS requests are allowed from the domain where your application is hosted. Contact __Lime Field__ about this.
 
-So, lets see how the uploads can be done as in a code example.
+So, lets see how the uploads can be done with a code example.
 
 ### Setup and Helpers
 
-First we will define some basic varables and helper functions to make the example code more readable. Hopefully.
+First we will define some basic variables and helper functions to make the example code more readable. Hopefully.
 
 Replace `USERNAME `, `PASSWORD` and `INSTALLATION_NAME` with valid values for your installation of Lime Field.
 
-The `entityHref` should point out the entity to which we add attachments.
+The `entityHref` should point out the entity to which we add attachments, e.g. `cases/1`.
 
 ```javascript
 const username = 'USERNAME';
@@ -148,11 +148,11 @@ function openFilesManager() {
 <summary>View the code</summary>
 
 ```javascript
-const username = 'kontra';
-const password = 'P0pkorni';
+const username = 'USERNAME';
+const password = 'PASSWORD';
 const credentials = window.btoa(`${username}:${password}`);
-const baseurl = 'https://manualtesting.remotex.net/api';
-const entityHref = 'cases/200204-4405';
+const baseurl = 'https://INSTALLATION_NAME.remotex.net/api';
+const entityHref = 'entity/id';
 
 function requestHeaders(options = {}) {
   const result = new Headers({
