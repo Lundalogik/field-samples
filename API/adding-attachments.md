@@ -14,15 +14,15 @@ So, lets see how the uploads can be done with a code example.
 
 First we will define some basic variables and helper functions to make the example code more readable. Hopefully.
 
-Replace `USERNAME `, `PASSWORD` and `INSTALLATION_NAME` with valid values for your installation of Lime Field.
+You are going to need an API access token, please follow the steps described in [How to generate an access token](create-api-token.md).
 
-The `entityHref` should point out the entity to which we add attachments, e.g. `cases/1`.
+The `entityHref` should point out the entity to which we add attachments, e.g. `cases/1`, `units/1`, etc.
 
 ```javascript
-const username = 'USERNAME';
-const password = 'PASSWORD';
-const credentials = window.btoa(`${username}:${password}`);
-const baseurl = 'https://INSTALLATION_NAME.remotex.net/api';
+const username = 'YOUR_LIME_FIELD_USERNAME';
+const apiToken = 'YOUR_LIME_FIELD_API_TOKEN';
+const credentials = window.btoa(`${username}:${apiToken}`);
+const baseurl = 'https://YOUR_LIME_FIELD_INSTALLATION_NAME.remotex.net/api';
 const entityHref = 'entity/id';
 
 function requestHeaders(options = {}) {
@@ -84,7 +84,7 @@ async function uploadFileContent(data) {
 }
 ```
 
-### 3. Adding the files as an attachments
+### 3. Adding the files as attachments
 
 __Note__, in this example we allow for multiple files uploads. But it works for a single file as well.
 
@@ -106,7 +106,7 @@ async function addAttachmentsToEntity(attachments) {
 
 ### Bootstraping the code to a view
 
-Bind `openFilesManager` to a `onclick` event on some button on your web page.
+Bind `openFilesManager` to an `onclick` event on some button in your web page.
 
 __Note__, we do not await content upload requests. They can be executed in parallel.
 
@@ -148,10 +148,10 @@ function openFilesManager() {
 <summary>View the code</summary>
 
 ```javascript
-const username = 'USERNAME';
-const password = 'PASSWORD';
-const credentials = window.btoa(`${username}:${password}`);
-const baseurl = 'https://INSTALLATION_NAME.remotex.net/api';
+const username = 'YOUR_LIME_FIELD_USERNAME';
+const apiToken = 'YOUR_LIME_FIELD_API_TOKEN';
+const credentials = window.btoa(`${username}:${apiToken}`);
+const baseurl = 'https://YOUR_LIME_FIELD_INSTALLATION_NAME.remotex.net/api';
 const entityHref = 'entity/id';
 
 function requestHeaders(options = {}) {
