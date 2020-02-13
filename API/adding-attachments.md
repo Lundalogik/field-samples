@@ -47,6 +47,10 @@ function requestOptions(options = {}, headers = {}) {
     headers: requestHeaders(headers)
   }, options);
 }
+
+function isFileToLarge(file) {
+  return file && file.size > 10485760;
+}
 ```
 
 ### 1. Creating a `File` entity
@@ -111,10 +115,6 @@ Bind `openFilesManager` to an `onclick` event on some button in your web page.
 __Note__, we do not await content upload requests. They can be executed in parallel.
 
 ```javascript
-function isFileToLarge(file) {
-  return file && file.size > 10485760;
-}
-
 function openFilesManager() {
   const input = document.createElement('input');
   input.setAttribute('type', 'file');
@@ -125,7 +125,7 @@ function openFilesManager() {
     const files = [...event.target.files];
 
     if (files.some(isFileToLarge)) {
-      throw 'One of the files is to large';
+      throw 'One of the files is too large';
     }
 
     Promise.all(files.map(createFileEntity)).then(attachments => {
@@ -175,6 +175,10 @@ function requestOptions(options = {}, headers = {}) {
     credentials: 'include',
     headers: requestHeaders(headers)
   }, options);
+}
+
+function isFileToLarge(file) {
+  return file && file.size > 10485760;
 }
 
 async function createFileEntity(file) {
@@ -232,7 +236,7 @@ function openFilesManager() {
     const files = [...event.target.files];
 
     if (files.some(isFileToLarge)) {
-      throw 'One of the files is to large';
+      throw 'One of the files is too large';
     }
 
     Promise.all(files.map(createFileEntity)).then(attachments => {
