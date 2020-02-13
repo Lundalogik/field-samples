@@ -14,7 +14,7 @@ So, lets see how the uploads can be done with a code example.
 
 First we will define some basic variables and helper functions to make the example code more readable. Hopefully.
 
-You are going to need an API access token, please follow the steps described in [How to generate an access token](generate-api-tokens.md).
+You are going to need an API access token, please follow the steps described in [How to generate an API token](generate-api-tokens.md).
 
 The `entityHref` should point out the entity to which we add attachments, e.g. `cases/1`, `units/1`, etc.
 
