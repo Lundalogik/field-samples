@@ -222,10 +222,6 @@ async function addAttachmentsToEntity(attachments) {
   }));
 }
 
-function isFileToLarge(file) {
-  return file && file.size > 10485760;
-}
-
 function openFilesManager() {
   const input = document.createElement('input');
   input.setAttribute('type', 'file');
