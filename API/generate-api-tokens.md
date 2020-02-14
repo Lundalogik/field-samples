@@ -2,7 +2,7 @@
 
 In order to generate API tokens to be used instead of Lime Field passwords in public scripts you need:
 
-1. Valid Lime Field account
+1. A valid Lime Field account
 2. Execute the following request, where `API_TOKEN_NAME` is a string of your choice
 
 __Every time you execute the request the token with that name will be regenerated.__
